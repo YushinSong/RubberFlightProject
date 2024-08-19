@@ -117,6 +117,7 @@
 }
 
 #airportName {
+  cursor: pointer;
   position: relative;
   /* outline: 2px solid green; */
   font-family: Verdana, Geneva, Tahoma, sans-serif;
