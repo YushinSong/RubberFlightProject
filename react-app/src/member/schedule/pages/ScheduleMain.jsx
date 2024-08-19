@@ -365,7 +365,9 @@ const ScheduleMain = () => {
                                 </div>
                             ))
                         )}
+                        <div className={style.bottomContainer}></div>
                     </div>
+                    <div className={style.bottomFooter}></div>
                 </div>
     
                 {/* Schedule Part */}

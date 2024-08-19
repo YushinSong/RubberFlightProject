@@ -7,8 +7,6 @@ import { RiArrowRightDoubleFill } from "react-icons/ri";
 import { PiDotOutline } from "react-icons/pi";
 import { TfiLayoutLineSolid } from "react-icons/tfi";
 import Cookies from 'js-cookie';
-import axios from 'axios';
-import { SERVER_HOST } from '../../../apis/api';
 import { Dropdown, Menu } from 'antd';
 
 
@@ -197,49 +195,48 @@ const Reserve = () => {
 
         {flight.outbound && flight.inbound ? (
         <>
-          <div className={style.airportInfo}>
-            <div className={style.depAirportInfo}>
-              <div className={style.airportIcon}><PiAirplaneTakeoffBold /></div>
-              <h2>가는 항공편</h2>
-              <div className={style.airports}>
-                <div>{flight.outbound.depAirport}</div>
-                <div className={style.airportArrow}><RiArrowRightDoubleFill /></div>
-                <div>{flight.outbound.arrAirport}</div>
+          <div className={style.depAirportInfo}>
+                <div className={style.airportIcon}><PiAirplaneTakeoffBold /></div>
+                <h2>가는 항공편</h2>
+                <div className={style.airports}>
+                  <div>{flight.outbound.depAirport}</div>
+                  <div className={style.airportArrow}><RiArrowRightDoubleFill /></div>
+                  <div>{flight.outbound.arrAirport}</div>
+                </div>
               </div>
-            </div>
-            <div className={style.ticket}>
-              <div>{flight.outbound.airlineName}</div>
-              <div>{flight.outbound.depDayFormat}<br/>
-                {flight.outbound.depTime}</div>
-              <div className={style.duringTime}><PiDotOutline /></div>
-              <div className={style.line}>{flight.outbound.takeTimeFormat}<div className={style.type}>직항</div></div>
-              <div className={style.duringTime2}><PiDotOutline /></div>
-              <div>{flight.outbound.arrDayFormat}<br/>
-                {flight.outbound.arrTime}</div>
-              <div><FlightPrice price={flight.outbound.price} /></div>
-            </div>
+              
+              <div className={style.ticket}>
+                <div>{flight.outbound.airlineName}</div>
+                <div>{flight.outbound.depDayFormat}<br/>{flight.outbound.depTime}</div>
+                <div className={style.duringTime}><PiDotOutline /></div>
+                <div className={style.line}>
+                  <div className={style.takeTimeFormat}>{flight.outbound.takeTimeFormat}</div>
+                  <div className={style.type}>직항</div>
+                </div>
+                <div className={style.duringTime2}><PiDotOutline /></div>
+                <div>{flight.outbound.arrDayFormat}<br/>{flight.outbound.arrTime}</div>
+                <div><FlightPrice price={flight.outbound.price} /></div>
+              </div>
 
-            <div className={style.arrAirportInfo}>
-              <div className={style.airportIcon}><PiAirplaneTakeoffBold /></div>
-              <h2>오는 항공편</h2>
-              <div className={style.airports}>
-                <div>{flight.inbound.depAirport}</div>
-                <div className={style.airportArrow}><RiArrowRightDoubleFill /></div>
-                <div>{flight.inbound.arrAirport}</div>
+              <div className={style.arrAirportInfo}>
+                <div className={style.airportIcon}><PiAirplaneTakeoffBold /></div>
+                <h2>오는 항공편</h2>
+                <div className={style.airports}>
+                  <div>{flight.inbound.depAirport}</div>
+                  <div className={style.airportArrow}><RiArrowRightDoubleFill /></div>
+                  <div>{flight.inbound.arrAirport}</div>
+                </div>
               </div>
-            </div>
-            <div className={style.ticket}>
-              <div>{flight.inbound.airlineName}</div>
-              <div>{flight.inbound.depDayFormat}<br/>
-                {flight.inbound.depTime}</div>
-              <div className={style.duringTime}><PiDotOutline /></div>
-              <div className={style.line}>{flight.outbound.takeTimeFormat}<div className={style.type}>직항</div></div>
-              <div className={style.duringTime2}><PiDotOutline /></div>
-              <div>{flight.inbound.arrDayFormat}<br/>
-                {flight.inbound.arrTime}</div>
-              <div><FlightPrice price={flight.inbound.price} /></div>
-            </div>
-          </div>
+
+              <div className={style.ticket}>
+                <div>{flight.inbound.airlineName}</div>
+                <div>{flight.inbound.depDayFormat}<br/>{flight.inbound.depTime}</div>
+                <div className={style.duringTime}><PiDotOutline /></div>
+                <div className={style.line}>{flight.inbound.takeTimeFormat}<div className={style.type}>직항</div></div>
+                <div className={style.duringTime2}><PiDotOutline /></div>
+                <div>{flight.inbound.arrDayFormat}<br/>{flight.inbound.arrTime}</div>
+                <div><FlightPrice price={flight.inbound.price} /></div>
+              </div>
         </>
       ) : (
         <>

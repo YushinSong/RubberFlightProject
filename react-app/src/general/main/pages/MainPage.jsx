@@ -410,7 +410,7 @@ useEffect(() => {
                                     value={dates}
                                     onChange={handleDateChange}
                                     className={style.flatInput}
-                                    style={{ pointerEvents: 'none' }}
+                                    style={{ pointerEvents: isSearhMode ? 'auto' : 'none' }}
                                     />
                                 </div>
                             )
@@ -423,7 +423,7 @@ useEffect(() => {
                                         value={dates}
                                         onChange={handleDateChange}
                                         className={style.flatInput}
-                                        style={{ pointerEvents: 'none' }}
+                                        style={{ pointerEvents: isSearhMode ? 'auto' : 'none' }}
                                     />
                                 </div>
                             )

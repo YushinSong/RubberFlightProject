@@ -8,6 +8,7 @@ import ChatBot from '../../../assets/images/schedule/chatbot.webp';
 import Bot from '../../../assets/images/schedule/bot.webp';
 import Send from '../../../assets/images/schedule/send.webp';
 import Spin from '../../../assets/images/schedule/spin.webp';
+import Help from '../../../assets/images/schedule/help.webp';
 
 
 const Chat = (props) => {
@@ -87,7 +88,7 @@ const Chat = (props) => {
     return (
         <>
           <div className={styles.btn}>
-            <button id={styles.help}></button>
+            <Image id={styles.help} src={Help}/>
             <div id={styles.helptext}>
               Lover Air의 귀염둥이 <br/>Lumi에게 궁금한 것을 물어보세요~
               <br/>채팅이 끝나면 '종료'라고 입력해주세요!</div>

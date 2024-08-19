@@ -44,33 +44,26 @@
 
 .btn {
     /* outline: 2px solid red; */
+    width: 30px;
+    height: 30px;
     position: relative;
-    top: 10px;
-    left: 100px;
+    left: 240px;
+    bottom: 5px;
     display: inline-block;
 }
 
 #help {
     width: 30px;
     height: 30px;
-    background-image: url(../../../assets/images/schedule/help.webp);
-    background-size: cover; 
-    margin-left: 130px;
     filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(125deg) brightness(106%) contrast(101%);
-    cursor: pointer;
-}
-
-.btn:hover #helptext{
-    visibility: visible; /* 도움말 텍스트 표시 */
 }
 
 #helptext {
-    /* outline: 2px solid red; */
     position: relative;
     width: 260px;
     padding: 10px;
-    left: 180px;
-    bottom: 80px;
+    left: 45px;
+    bottom: 75px;
     border-radius: 10px;
     word-wrap: break-word; /* 긴 단어를 줄 바꿈 */
     background-color: #fce8f7;
@@ -89,6 +82,10 @@
     position:absolute;
     top: 60px;
     left:-13px;
+}
+
+.btn:hover #helptext{
+    visibility: visible; /* 도움말 텍스트 표시 */
 }
 
 #chatIn{
