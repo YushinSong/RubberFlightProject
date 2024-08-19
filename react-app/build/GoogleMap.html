@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      gmp-map-3d {
+        height: 100%;
+        width: 100%;
+      }
+      .vAygCK-api-load-alpha-banner {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <gmp-map-3d
+      heading="25"
+      range="2500"
+      tilt="30"
+      center="37.7905,-122.3989, 5000000" default-labels-disabled>
+      
+      <!-- 지나온 거리 -->
+      <gmp-polyline-3d
+        id="route-live-to-arr"
+        altitude-mode="relative-to-ground"
+        stroke-color="#FFFF00"
+        stroke-width="10"
+        stroke-opacity="0.75">
+      </gmp-polyline-3d>
+
+      <!-- 남은 거리 -->
+      <gmp-polyline-3d
+        id="route-dep-to-live"
+        altitude-mode="relative-to-ground"
+        stroke-color="#FFFF00"
+        stroke-width="10"
+        stroke-opacity="0.3">
+      </gmp-polyline-3d>
+
+      <!-- 출발 공항 폴리곤 -->
+      <gmp-polygon-3d 
+        id="dep-polygon"
+        altitude-mode="relative-to-ground" 
+        fill-color="#00ff00" 
+        fill-opacity="0.5" 
+        stroke-color="#0000ff" 
+        stroke-width="8" 
+        extruded>
+      </gmp-polygon-3d>
+
+      <!-- 도착 공항 폴리곤 -->
+      <gmp-polygon-3d 
+        id="arr-polygon"
+        altitude-mode="relative-to-ground" 
+        fill-color="#00ff00" 
+        fill-opacity="0.5" 
+        stroke-color="#0000ff" 
+        stroke-width="8" 
+        extruded>
+      </gmp-polygon-3d>
+
+      <!-- 현재 위치 폴리곤 -->
+      <gmp-polygon-3d 
+        id="live-polygon"
+        altitude-mode="relative-to-ground" 
+        fill-color="#ff0000" 
+        fill-opacity="0.5" 
+        stroke-color="#ff0000" 
+        stroke-width="8" 
+        extruded>
+      </gmp-polygon-3d>
+
+    </gmp-map-3d>
+
+    <script>
+      // URL에서 API 키 추출
+      const urlParams = new URLSearchParams(window.location.search);
+      const apiKey = urlParams.get('apiKey');
+      console.log(apiKey);
+
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=alpha&libraries=maps3d`;
+      script.async = true;
+      document.body.appendChild(script);
+
+      const liveToArrPolyline = document.querySelector('#route-live-to-arr');
+      const depToLivePolyline = document.querySelector('#route-dep-to-live');
+      const livePolygon = document.querySelector('#live-polygon');
+      const depPolygon = document.querySelector('#dep-polygon');
+      const arrPolygon = document.querySelector('#arr-polygon');
+
+      customElements.whenDefined(depToLivePolyline.localName).then(() => {
+        depToLivePolyline.coordinates = [];
+        liveToArrPolyline.coordinates = [];
+        livePolygon.outerCoordinates = [];
+        depPolygon.outerCoordinates = [];
+        arrPolygon.outerCoordinates = [];
+      });
+
+      window.addEventListener('message', (event) => {
+        if (event.data.type === 'UPDATE_COORDINATES') {
+          const { liveLat, liveLng, arrAirportLat, arrAirportLng, depAirportLat, depAirportLng } = event.data;
+
+          const livePosition = { lat: parseFloat(liveLat), lng: parseFloat(liveLng) };
+          const depPosition = { lat: parseFloat(depAirportLat), lng: parseFloat(depAirportLng) };
+          const arrPosition = { lat: parseFloat(arrAirportLat), lng: parseFloat(arrAirportLng) };
+
+          const delta = 0.1; // 범위
+
+          depToLivePolyline.coordinates = [
+            depPosition,
+            livePosition
+          ];
+
+          liveToArrPolyline.coordinates = [
+            livePosition,
+            arrPosition
+          ];
+
+          // 출발 공항 폴리곤 좌표 계산
+          const depPolygonCoordinates = [
+            { lat: depPosition.lat + delta, lng: depPosition.lng - delta, altitude: 1000 }, 
+            { lat: depPosition.lat - delta, lng: depPosition.lng - delta, altitude: 1000 },
+            { lat: depPosition.lat - delta, lng: depPosition.lng + delta, altitude: 1000 }, 
+            { lat: depPosition.lat + delta, lng: depPosition.lng + delta, altitude: 1000 }, 
+            { lat: depPosition.lat + delta, lng: depPosition.lng - delta, altitude: 1000 }
+          ];
+
+          // 도착 공항 폴리곤 좌표 계산
+          const arrPolygonCoordinates = [
+            { lat: arrPosition.lat + delta, lng: arrPosition.lng - delta, altitude: 1000 }, 
+            { lat: arrPosition.lat - delta, lng: arrPosition.lng - delta, altitude: 1000 },
+            { lat: arrPosition.lat - delta, lng: arrPosition.lng + delta, altitude: 1000 }, 
+            { lat: arrPosition.lat + delta, lng: arrPosition.lng + delta, altitude: 1000 }, 
+            { lat: arrPosition.lat + delta, lng: arrPosition.lng - delta, altitude: 1000 }
+          ];
+
+          // 실시간 위치 삼각형 좌표 계산
+          const livePolygonCoordinates = [
+            { lat: livePosition.lat, lng: livePosition.lng, altitude: 1000 }, // 중심
+            { lat: livePosition.lat + delta, lng: livePosition.lng - delta, altitude: 1000 }, // 우측 하단
+            { lat: livePosition.lat - delta, lng: livePosition.lng - delta, altitude: 1000 }  // 좌측 하단
+          ];
+
+          // 지도 설정
+          const map = document.querySelector('gmp-map-3d');
+          map.setAttribute('center', `${livePosition.lat},${livePosition.lng},9900000`);
+          map.setAttribute('tilt', `1`);
+
+          // 출발 공항 폴리곤 설정
+          customElements.whenDefined(depPolygon.localName).then(() => {
+            depPolygon.outerCoordinates = depPolygonCoordinates;
+          });
+
+          // 도착 공항 폴리곤 설정
+          customElements.whenDefined(arrPolygon.localName).then(() => {
+            arrPolygon.outerCoordinates = arrPolygonCoordinates;
+          });
+
+          // 실시간 위치 삼각형 폴리곤 설정
+          customElements.whenDefined(livePolygon.localName).then(() => {
+            livePolygon.outerCoordinates = livePolygonCoordinates;
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

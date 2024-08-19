@@ -58,14 +58,6 @@ const ScheduleEditPart = (props) => {
         webSocketService.sendDates(props.ScheduleId, content, deleteIndex);
     }
 
-    const openChat = () => {
-        setShowChat(!showChat);
-      };
-
-    const closeChat = () => {
-    setShowChat(false);
-    }; 
-
     return (
         <div id={style.editPart}>
             <div id={style.editcontainer}>
@@ -81,14 +73,9 @@ const ScheduleEditPart = (props) => {
                     </div>
                     <div id={style.addButton} onClick={handleAddDate}/>
                 </div>
-
                 <div id={style.chatcontainer}>
                     <Chat activeUsersPic={props.activeUsersPic} />
                 </div>
-                {/* <div id={style.btn}>
-                    <button className={style.chatbtn} onClick={openChat}></button>
-                    <div id={style.helptext}>Lover Air의 귀염둥이 Lumi에게 궁금한 것을 물어보세요~</div>
-                </div> */}
             </div>
             <div id={style.datelistcontainer}>
                 {dates.map((date, index) => 

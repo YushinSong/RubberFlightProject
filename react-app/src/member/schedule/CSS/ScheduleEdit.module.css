@@ -368,29 +368,10 @@ body{
 
 #chatcontainer{
     /* outline: 2px solid red; */
+    margin-right: 10px;
     width: 280px;
-    height: 550px;
-    margin: 50px 11px 0px 0;
-    display: inline-block;
-    /* z-index: 2; */
+    position: relative;
+    top: 15vh;
+    max-height: 60vh;
+    padding-bottom: 50px;
 }
-
-/* #btn {
-    display: inline-block;
-    width: 80px;
-    height: 60px;
-    margin: 630px 200px 0 0;
-    position: fixed; 
-} */
-
-/* .chatbtn {
-    background-image: url(../../../assets/images/schedule/bot.webp);
-    background-size: cover;
-    width: 60px;
-    height: 60px;
-    border-radius: 100px;
-    border: 2px solid #3791f9;
-    background-color: #3791f9;
-    margin-left: 10px;
-    
-} */

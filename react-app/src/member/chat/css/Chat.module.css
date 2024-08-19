@@ -1,14 +1,14 @@
 #chatBox {
     /* outline: 2px solid red; */
-    width: 280px;
-    height: 550px;
+    width: 100%;
+    height: 100%;
     border: 2px solid #bcd8f7;
     border-radius: 5px;
     display: flex;
     flex-direction: column; /* 자식 요소들을 세로로 배치 */
     overflow: hidden;
     background-color: #ffffff;
-    margin-top: -130px;
+    margin-top: -112px;
 }
 
 #titleBox {
@@ -31,24 +31,13 @@
     filter: invert(4%) sepia(99%) saturate(7236%) hue-rotate(209deg) brightness(94%) contrast(102%);
 }
 
-/* #close {
-    width: 30px;
-    height: 30px;
-    background-image: url(../../../assets/images/schedule/close.webp);
-    background-size: cover; 
-    margin-left: 140px;
-    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(125deg) brightness(106%) contrast(101%);
-    width: 25px;
-    cursor: pointer;
-} */
-
 .btn {
     /* outline: 2px solid red; */
     width: 30px;
     height: 30px;
     position: relative;
     left: 240px;
-    bottom: 5px;
+    top: 10px;
     display: inline-block;
 }
 
@@ -63,7 +52,7 @@
     width: 260px;
     padding: 10px;
     left: 45px;
-    bottom: 75px;
+    bottom: 70px;
     border-radius: 10px;
     word-wrap: break-word; /* 긴 단어를 줄 바꿈 */
     background-color: #fce8f7;

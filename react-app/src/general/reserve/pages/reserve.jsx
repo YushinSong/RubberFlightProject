@@ -195,58 +195,92 @@ const Reserve = () => {
 
         {flight.outbound && flight.inbound ? (
         <>
-          <div className={style.depAirportInfo}>
-                <div className={style.airportIcon}><PiAirplaneTakeoffBold /></div>
-                <h2>가는 항공편</h2>
-                <div className={style.airports}>
-                  <div>{flight.outbound.depAirport}</div>
-                  <div className={style.airportArrow}><RiArrowRightDoubleFill /></div>
-                  <div>{flight.outbound.arrAirport}</div>
-                </div>
+          <div className={style.airportInfo}>
+            <div className={style.depAirportInfo}>
+              <div className={style.airportIcon}><PiAirplaneTakeoffBold /></div>
+              <h2>가는 항공편</h2>
+              <div className={style.airports}>
+                <div>{flight.outbound.depAirport}</div>
+                <div className={style.airportArrow}><RiArrowRightDoubleFill /></div>
+                <div>{flight.outbound.arrAirport}</div>
               </div>
-              
-              <div className={style.ticket}>
-                <div>{flight.outbound.airlineName}</div>
-                <div>{flight.outbound.depDayFormat}<br/>{flight.outbound.depTime}</div>
-                <div className={style.duringTime}><PiDotOutline /></div>
+            </div>
+
+            <div className={style.ticket}>
+              <div>{flight.outbound.airlineName}</div>
+              <div className={style.depDayTime}>{flight.outbound.depDayFormat}<br/>
+                {flight.outbound.depTime}</div>
+                <div className={style.takeTime}>               
+                  <div className={style.duringTime}><PiDotOutline /></div>
                 <div className={style.line}>
                   <div className={style.takeTimeFormat}>{flight.outbound.takeTimeFormat}</div>
                   <div className={style.type}>직항</div>
                 </div>
                 <div className={style.duringTime2}><PiDotOutline /></div>
-                <div>{flight.outbound.arrDayFormat}<br/>{flight.outbound.arrTime}</div>
-                <div><FlightPrice price={flight.outbound.price} /></div>
-              </div>
-
-              <div className={style.arrAirportInfo}>
-                <div className={style.airportIcon}><PiAirplaneTakeoffBold /></div>
-                <h2>오는 항공편</h2>
-                <div className={style.airports}>
-                  <div>{flight.inbound.depAirport}</div>
-                  <div className={style.airportArrow}><RiArrowRightDoubleFill /></div>
-                  <div>{flight.inbound.arrAirport}</div>
                 </div>
-              </div>
+              <div>{flight.outbound.arrDayFormat}<br/>
+                {flight.outbound.arrTime}</div>
+              <div><FlightPrice price={flight.outbound.price} /></div>
+            </div>
 
-              <div className={style.ticket}>
-                <div>{flight.inbound.airlineName}</div>
-                <div>{flight.inbound.depDayFormat}<br/>{flight.inbound.depTime}</div>
-                <div className={style.duringTime}><PiDotOutline /></div>
-                <div className={style.line}>{flight.inbound.takeTimeFormat}<div className={style.type}>직항</div></div>
-                <div className={style.duringTime2}><PiDotOutline /></div>
-                <div>{flight.inbound.arrDayFormat}<br/>{flight.inbound.arrTime}</div>
-                <div><FlightPrice price={flight.inbound.price} /></div>
+            <div className={style.arrAirportInfo}>
+              <div className={style.airportIcon}><PiAirplaneTakeoffBold /></div>
+              <h2>오는 항공편</h2>
+              <div className={style.airports}>
+                <div>{flight.inbound.depAirport}</div>
+                <div className={style.airportArrow}><RiArrowRightDoubleFill /></div>
+                <div>{flight.inbound.arrAirport}</div>
               </div>
+            </div>
+
+            <div className={style.ticket}>
+              <div>{flight.inbound.airlineName}</div>
+              <div className={style.depDayTime}>{flight.inbound.depDayFormat}<br/>
+                {flight.inbound.depTime}</div>
+              <div className={style.takeTime}>
+                <div className={style.duringTime}><PiDotOutline /></div>
+                <div className={style.line}>
+                <div className={style.takeTimeFormat}>{flight.outbound.takeTimeFormat}</div>
+                  <div className={style.type}>직항</div>
+                    </div>
+                <div className={style.duringTime2}><PiDotOutline /></div>
+              </div>
+              <div>{flight.inbound.arrDayFormat}<br/>
+                {flight.inbound.arrTime}</div>
+              <div><FlightPrice price={flight.inbound.price} /></div>
+            </div>
+          </div>
         </>
       ) : (
         <>
-          <h2>편도 항공편</h2>
-          <div>항공사: {flight.airlineName}</div>
-          <div>출발 공항: {flight.depAirport}</div>
-          <div>도착 공항: {flight.arrAirport}</div>
-          <div>출발 날짜: {flight.depTime}</div>
-          <div>도착 날짜: {flight.arrTime}</div>
-          <div>가격:<div><FlightPrice price={flight.price} /></div></div>
+        <div className={style.airportInfo}>
+            <div className={style.depAirportInfo}>
+              <div className={style.airportIcon}><PiAirplaneTakeoffBold /></div>
+              <h2>가는 항공편</h2>
+              <div className={style.airports}>
+                <div>{flight.depAirport}</div>
+                <div className={style.airportArrow}><RiArrowRightDoubleFill /></div>
+                <div>{flight.arrAirport}</div>
+              </div>
+            </div>
+
+            <div className={style.ticket}>
+              <div>{flight.airlineName}</div>
+              <div className={style.depDayTime}>{flight.depDayFormat}<br/>
+                {flight.depTime}</div>
+                <div className={style.takeTime}>               
+                  <div className={style.duringTime}><PiDotOutline /></div>
+                <div className={style.line}>
+                  <div className={style.takeTimeFormat}>{flight.takeTimeFormat}</div>
+                  <div className={style.type}>직항</div>
+                </div>
+                <div className={style.duringTime2}><PiDotOutline /></div>
+                </div>
+              <div>{flight.arrDayFormat}<br/>
+                {flight.arrTime}</div>
+              <div><FlightPrice price={flight.price} /></div>
+            </div>
+          </div>
         </>
       )}
       
@@ -264,36 +298,47 @@ const Reserve = () => {
       </div>
 
       <div className={style.payUserInfo}>
-      <h2>결제자 정보 입력</h2>
-      <label>
-        구매자 이름:
-        <input
-          type="text"
-          value={buyerName}
-          onChange={(e) => setBuyerName(e.target.value)}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        전화번호:
-        <input
-          type="tel"
-          value={buyerTel}
-          onChange={(e) => setBuyerTel(e.target.value)}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        이메일:
-        <input
-          type="email"
-          value={buyerEmail}
-          onChange={(e) => setBuyerEmail(e.target.value)}
-          required
-        />
-      </label>
+      <h2>예약자 정보</h2>
+      <table className={style.reservationTable}>
+      <tbody>
+        <tr>
+          <td><label htmlFor="buyerName">이름:</label></td>
+          <td>
+            <input
+              type="text"
+              id="buyerName"
+              value={buyerName}
+              onChange={(e) => setBuyerName(e.target.value)}
+              required
+            />
+          </td>
+          <td><label htmlFor="buyerBirth">생년월일:</label></td>
+          <td><input type="text" id="buyerBirth" name="buyerBirth" /></td>
+        </tr>
+        <tr>
+          <td><label htmlFor="buyerEmail">이메일:</label></td>
+          <td>
+            <input
+              type="email"
+              id="buyerEmail"
+              value={buyerEmail}
+              onChange={(e) => setBuyerEmail(e.target.value)}
+              required
+            />
+          </td>
+          <td><label htmlFor="buyerTel">휴대폰 번호:</label></td>
+          <td>
+            <input
+              type="tel"
+              id="buyerTel"
+              value={buyerTel}
+              onChange={(e) => setBuyerTel(e.target.value)}
+              required
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
       </div>
     </div>
     </>

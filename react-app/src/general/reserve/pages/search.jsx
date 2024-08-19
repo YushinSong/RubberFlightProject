@@ -14,7 +14,7 @@ import { Box, Text } from '@chakra-ui/react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { FaInfoCircle } from 'react-icons/fa';
-import PageButtons from '../components/PageButtons'
+import PageButtons from '../components/PageButtons';
 import { Spinner } from '@chakra-ui/react';
 
 const Search = () => {
@@ -29,7 +29,7 @@ const Search = () => {
   const [departureDate, setDepartureDate] = useState('');
   const [returnDate, setReturnDate] = useState('');
 
-  const [departure, setDeparture] = useState('ICN');
+  const [departure, setDeparture] = useState('');
   const [arrival, setArrival] = useState('');
   const [airports, setAirports] = useState([]);
   const [filteredAirports, setFilteredAirports] = useState([]);
@@ -408,7 +408,10 @@ const Search = () => {
                   className="editable-div" id={style.editableDiv}
                   onClick={() => handleClickEdit('departure')}
                 >
-                  <div className="airportName" id={style.airportName}>{departure || '출발'}</div>
+                   <div
+                    className={`airportName ${departure ? style.airportName : style.placeholderText}`}
+                    id={style.airportName}
+                  >{departure || '도시, 공항명 입력'}</div>
                   <div className={style.selectArrow} />
                 </div>
                 {activeField === 'departure' && (
@@ -657,12 +660,40 @@ const Search = () => {
               {paginatedResults.map((flight, index) => (
                 <li key={index} onClick={() => handleClick(flight)}>
                   <div className={style.flightInfo}>
-                    <div className={style.flightAirline}>{flight.airlineName}</div>
+                    <div className={style.flightInfo}>
+                      <div className={style.flightAirline}>
+                        <div>{flight.airlineName}</div>
+                      </div>
+                      <div className={style.flightTimes}>
+                        <div className={style.flightDepTime}>
+                          {flight.depTime}
+                          <div className={style.depAirport}>{flight.depAirport}</div>
+                        </div>
+                      </div>
+                            <div className={style.airplane2}><IoAirplane /></div>
+                      <div className={style.flightTimes2}>
+                        <div className={style.flightArrTime}>
+                          {flight.arrTime}
+                          <div className={style.arrAirport}>{flight.arrAirport}</div>
+                        </div>
+                      </div>
+                      
+                      <div className={style.flightTakeTimes}>
+                        <div className={style.flightTakeTime}>{flight.takeTimeFormat}</div>
+                      </div>
+                    </div>
+                    <div className={style.flightPrice}>
+                      <div className={style.verticalLine}></div>
+                      <div className={style.totalPrice}>
+                        {(flight.priceFormat).toLocaleString('ko-KR')}원
+                      </div>
+                    </div>
+                    {/* <div className={style.flightAirline}>{flight.airlineName}</div>
                     <div className={style.flightDepTime}>{flight.depTime}<div className={style.depAirport}>{flight.depAirport}</div></div>
                     <div className={style.flightArrTime}>{flight.arrTime}<div className={style.arrAirport}>{flight.arrAirport}</div></div>
                     <div className={style.flightTakeTime}>{flight.takeTimeFormat}</div>
                     <div className={style.verticalLine}></div>
-                    <div className={style.flightPrice}>{flight.priceFormat}원</div>
+                    <div className={style.flightPrice}>{flight.priceFormat}원</div> */}
                   </div>
                 </li>
               ))}

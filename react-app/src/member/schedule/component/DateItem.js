@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import style from '../CSS/ScheduleEdit.module.css';
 import TextareaAutosize from 'react-textarea-autosize';
 import 'flatpickr/dist/flatpickr.min.css';
@@ -7,9 +7,23 @@ import { FaTrash } from "react-icons/fa6";
 
 const DateItem = ({ index, dateInfo, handleChange, handleDeleteDate }) => {
     const {id, date, content} = dateInfo;
+    const [localContent, setLocalContent] = useState('');
+    const contentRef = useRef(localContent);
+
+    useEffect(() => {
+        setLocalContent(content);
+        contentRef.current = content;
+    }, [content]);
+
+    useEffect(() => {
+        contentRef.current = localContent; // Update the ref whenever localContent changes
+    }, [localContent]);
 
     const onInputChange = (event) => {
-        handleChange(index, event.target.value, 1);
+        // handleChange(index, event.target.value, 1);
+        const newValue = event.target.value;
+        setLocalContent(newValue);
+        handleChange(index, newValue, 1);
     };
     const onDateChange = (changedDate) => {
         handleChange(index, changedDate, 0);
@@ -35,7 +49,7 @@ const DateItem = ({ index, dateInfo, handleChange, handleDeleteDate }) => {
             <div className={style.dateContent}>
                 <TextareaAutosize
                     // minRows={3}
-                    value={content}
+                    value={localContent}
                     onChange={onInputChange}
                     placeholder='일정을 작성해보세요.'
                     spellCheck={false}

@@ -94,6 +94,10 @@ const ScheduleEdit = () => {
     }, [id]);
 
     useEffect(() => {
+        console.log(activeUsersPic);
+    }, [activeUsersPic]);
+
+    useEffect(() => {
         const handleBeforeUnload = (event) => {
             webSocketService.leavePage(id, token);
         };
@@ -153,10 +157,15 @@ const ScheduleEdit = () => {
         }
     }
 
+
+
     return (
         <div id={style.contentBody}>
             <div id={style.headerPart}>
-                <div id={style.backButton} onClick={()=>{navigate('/schedule')}}/>
+                <div id={style.backButton} onClick={()=>{
+                        webSocketService.leavePage(id, token);
+                        navigate('/schedule')
+                    }}/>
                 <div ref={titleRef} id={style.headerTitle} onClick={(e) => {
                         titleRef.current.classList.add(`${style.hidden}`);
                         titleInputRef.current.classList.remove(`${style.hidden}`);

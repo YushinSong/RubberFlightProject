@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.b53eb1c3.css",
-    "main.js": "/static/js/main.5d5beda2.js",
+    "main.css": "/static/css/main.9b209cba.css",
+    "main.js": "/static/js/main.4af6481e.js",
     "static/js/206.7544542d.chunk.js": "/static/js/206.7544542d.chunk.js",
     "static/media/cloud.webp": "/static/media/cloud.71f4ed1aea07a7b84bca.webp",
     "static/media/cloud2.webp": "/static/media/cloud2.2d47371553796b4fbf96.webp",
@@ -25,6 +25,7 @@
     "static/media/loading.webp": "/static/media/loading.b0a55cd221edf4710e13.webp",
     "static/media/chatbot.webp": "/static/media/chatbot.39b0cadd45a9ad40ea04.webp",
     "static/media/naver_login_btn.webp": "/static/media/naver_login_btn.a9938072323344753334.webp",
+    "static/media/help.webp": "/static/media/help.d6e1942a895f834c636c.webp",
     "static/media/reviewwrite.webp": "/static/media/reviewwrite.e6c3108eeec00ae2542f.webp",
     "static/media/back.webp": "/static/media/back.3e933022a373a770f044.webp",
     "static/media/yellow_star.webp": "/static/media/yellow_star.9aae585f43ff9d251bea.webp",
@@ -39,11 +40,10 @@
     "static/media/arrow.webp": "/static/media/arrow.fdee755eafb187d0d55a.webp",
     "index.html": "/index.html",
     "static/media/send.webp": "/static/media/send.03867650e220b259f255.webp",
-    "static/media/add-button.webp": "/static/media/add-button.86eb910f5fd531b1df7d.webp",
-    "static/media/close.webp": "/static/media/close.0158d1dceb275b41d095.webp"
+    "static/media/add-button.webp": "/static/media/add-button.86eb910f5fd531b1df7d.webp"
   },
   "entrypoints": [
-    "static/css/main.b53eb1c3.css",
-    "static/js/main.5d5beda2.js"
+    "static/css/main.9b209cba.css",
+    "static/js/main.4af6481e.js"
   ]
 }

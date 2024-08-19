@@ -24,9 +24,9 @@ export const alert = (title, text, icon, callback) => {
       text: text,
       icon: icon,
       showCancelButton: true,
-      cancelButtonColor: '#d33',
+      cancelButtonColor: '#f38099',
       cancelButtonText: 'No',
-      confirmButtonColor: '#3085d6',
+      confirmButtonColor: '#679df3',
       confirmButtonText: 'Yes',
     }).then(callback);
   };

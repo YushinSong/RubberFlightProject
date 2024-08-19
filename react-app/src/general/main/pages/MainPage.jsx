@@ -24,7 +24,7 @@ const MainPage = () => {
     const [departureDate, setDepartureDate] = useState('');
     const [returnDate, setReturnDate] = useState('');
     
-    const [departure, setDeparture] = useState('ICN');
+    const [departure, setDeparture] = useState('');
     const [arrival, setArrival] = useState('');
     const [airports, setAirports] = useState([]);
     const [filteredAirports, setFilteredAirports] = useState([]);
@@ -150,7 +150,6 @@ useEffect(() => {
             )
         );
     };
-
 
 // 테스트용
     // useEffect(() => {

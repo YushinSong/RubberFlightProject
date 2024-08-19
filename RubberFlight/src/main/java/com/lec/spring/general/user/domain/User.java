@@ -44,6 +44,10 @@ public class User {
     @Column(nullable = true)
     private String image;
 
+    public String getImage() {
+        return image.replace("\\", "/");
+    }
+
     @Builder.Default
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JsonIgnore

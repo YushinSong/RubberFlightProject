@@ -86,8 +86,6 @@ public class NoteController {
         Long userId = jwtUtil.getId(request.getUserToken());
         User enteredUser = userService.findById(userId);
         String imageUrl = enteredUser.getImage();
-        if(imageUrl.equals("/uploads/user.png"))
-            imageUrl = serverUrl + "/uploads/user.png";
 
         activeUsersMap.computeIfAbsent(scheduleId, k -> new ConcurrentSkipListSet<>()).add(imageUrl);
         Set<String> usersPics = activeUsersMap.get(scheduleId);
@@ -104,8 +102,6 @@ public class NoteController {
         Long userId = jwtUtil.getId(request.getUserToken());
         User enteredUser = userService.findById(userId);
         String imageUrl = enteredUser.getImage();
-        if(imageUrl.equals("/uploads/user.png"))
-            imageUrl = serverUrl + "/uploads/user.png";
 
         Set<String> usersPics = activeUsersMap.get(scheduleId);
         if (usersPics != null) {

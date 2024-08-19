@@ -98,9 +98,7 @@ const Chat = (props) => {
               <Flex justifyContent='start' alignItems='center'>
                 <Image src={ChatBot} className={styles.botIcon} />
                 <div id={styles.title}>Lumi</div>
-                {/* <button id={styles.close} onClick={props.closeChat}></button> */}
               </Flex>
-                {/* <div id={styles.helptext}>Lover Air의 귀염둥이 Lumi에게 궁금한 것을 물어보세요~</div> */}
             </div>
             <div id={styles.chatIn} ref={chatContainerRef}>
               {chatHistory.map((chat, index) => (
