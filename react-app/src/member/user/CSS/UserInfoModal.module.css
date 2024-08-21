@@ -55,3 +55,23 @@
     font-size: 15px !important;
     color:#a0aab2;
 }
+
+.nextIcon{
+    width: 25px;
+    height: 25px;
+    background-image: url('../../../../src/assets/images/mypage/next.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none !important;
+    margin-left: 0 !important;
+}
+
+.infoContainer{
+    margin-top: 35px;
+}
+
+.info{
+    font-size: 25px;
+    margin-left: 13px;
+    margin-top: 15px;
+}

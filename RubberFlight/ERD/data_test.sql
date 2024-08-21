@@ -2,6 +2,7 @@ SELECT * FROM ft_country;
 SELECT * FROM ft_airport;
 
 SELECT * FROM ft_user;
+SELECT * FROM FT_USER;
 
 SELECT username, password, image FROM ft_user;
 

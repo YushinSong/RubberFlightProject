@@ -64,4 +64,8 @@ public class CouponService {
         System.out.println("Return coupons for userId " + userId + ": " + coupons);
         return coupons;
     }
+
+    public int getCouponCountByUserId(Long userId) {
+        return couponRepository.countByUsersId(userId);
+    }
 }

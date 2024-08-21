@@ -20,4 +20,5 @@ public class UserDTO {
     private String tel;
 
     private List<ChecklistDTO> checklists;
+
 }

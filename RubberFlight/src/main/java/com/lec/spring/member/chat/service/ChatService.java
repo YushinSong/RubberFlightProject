@@ -28,48 +28,69 @@ public class ChatService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private final Map<String, List<String>> userConversations = new HashMap<>();
+//    private final Map<String, List<String>> userConversations = new HashMap<>();
 
     // 대화 기록 유지하기
-    public String getResponse(String userId, String prompt) {
+//    public String getResponse(String userId, String prompt) {
+//
+//        // 대화 종료 또는 초기화 명령어 처리
+//        if (prompt.equalsIgnoreCase("종료") || prompt.equalsIgnoreCase("새 대화 시작")) {
+//            userConversations.remove(userId);
+//            return "채팅을 종료합니다.";
+//        }
+//        // 대화 기록이 없으면 새로 생성
+//        userConversations.putIfAbsent(userId, new ArrayList<>());
+//
+//        // 대화 기록에 새로운 프롬프트 추가
+//        userConversations.get(userId).add("User: " + prompt);
+//
+//        // 대화의 모든 내용을 하나의 프롬프트로 결합
+//        String combinedPrompt = String.join("\n", userConversations.get(userId));
+//
+//        // Cohere API 를 사용하여 AI 응답 생성
+//        String aiResponse = aiResponse(combinedPrompt);
+//
+//        // AI 응답을 대화 기록에 추가
+//        userConversations.get(userId).add("AI: " + aiResponse);
+//
+//        // AI 응답을 포맷하여 번호를 매기고 줄바꿈 추가
+//        String formattedAiResponse = formatAiResponse(aiResponse);
+//
+//        List<String> searchQuery = extractKeyword(formattedAiResponse);
+//
+//        // Google Custom Search API 를 사용하여 검색 결과 가져오기
+//        String searchResults = performGoogleSearch(searchQuery, prompt);
+//
+//        // 두 결과를 조합하여 반환
+//        return formattedAiResponse + "<br><관련 링크><br>" + searchResults;
+//    }
 
-        // 대화 종료 또는 초기화 명령어 처리
-        if (prompt.equalsIgnoreCase("종료") || prompt.equalsIgnoreCase("새 대화 시작")) {
-            userConversations.remove(userId);
-            return "채팅을 종료합니다.";
-        }
-        // 대화 기록이 없으면 새로 생성
-        userConversations.putIfAbsent(userId, new ArrayList<>());
-
-        // 대화 기록에 새로운 프롬프트 추가
-        userConversations.get(userId).add("User: " + prompt);
-
-        // 대화의 모든 내용을 하나의 프롬프트로 결합
-        String combinedPrompt = String.join("\n", userConversations.get(userId));
-
+    // 단기적 채팅하기
+    public String getResponse(String prompt){
         // Cohere API 를 사용하여 AI 응답 생성
-        String aiResponse = aiResponse(combinedPrompt);
-
-        // AI 응답을 대화 기록에 추가
-        userConversations.get(userId).add("AI: " + aiResponse);
+        String aiResponse = aiResponse(prompt);
 
         // AI 응답을 포맷하여 번호를 매기고 줄바꿈 추가
         String formattedAiResponse = formatAiResponse(aiResponse);
 
+        // 검색 키워드 담기
         List<String> searchQuery = extractKeyword(formattedAiResponse);
 
         // Google Custom Search API 를 사용하여 검색 결과 가져오기
         String searchResults = performGoogleSearch(searchQuery, prompt);
 
         // 두 결과를 조합하여 반환
-        return formattedAiResponse + "<br><관련 링크><br>" + searchResults;
+        return formattedAiResponse + (searchResults == null ? "" : "<br><관련 링크><br>" + searchResults);
     }
 
+
     public String aiResponse(String prompt) {
-        String formattedPrompt = "다음 질문에 대해 친근한 톤으로 정확하게 답변해 주세요." +
-                                 " 예를 들어, '다낭은 멋진 여행지예요. 1.미키해변: 멋진 해변이죠 2. 성요셉 성당: 멋진 성당입니다'와 같은 형식으로 답변해 주세요." +
+        String formattedPrompt = " AI의 이름은 'Lumi'이고 사용자에게 여행지를 추천해주는 역할입니다. " +
+                                 " 사용자가 작성한 다음 질문에 대해 친근한 톤으로 정확하게 답변해 주세요." +
+                                 " 예시를 들면 사용자가 '다낭 여행지 추천해줘' 라고 질문하면 " +
+                                 " '다낭은 멋진 여행지예요. 1.미키해변: 멋진 해변이죠 2. 성요셉 성당: 멋진 성당입니다'와 같은 형식으로 번호를 앞에 붙여 답변해 주세요." +
                                  " 만약, 사용자가 '미키해변은 어떤 곳이야? 설명해줘'라는 설명을 해달라는 질문이면 " +
-                                 "1. 멋있어요 2. 사람들이 즐겁게 헤엄칠 수 있어요 이렇게 번호로 설명하지 말고 문장으로 답변해 주세요"  +
+                                 " 1. 멋있어요 2. 사람들이 즐겁게 헤엄칠 수 있어요 이렇게 번호로 설명하지 말고 문장으로 답변해 주세요."  +
                                  " 질문: " + prompt;
 
         String url = "https://api.cohere.ai/v1/generate";
@@ -77,26 +98,49 @@ public class ChatService {
         headers.set("Authorization", "Bearer " + cohereApiKey);
         headers.set("Content-Type", "application/json");
 
+        // JSON 형식으로 요청 본문 생성 (장기 채팅)
+//        Map<String, Object> requestBodyMap = new HashMap<>();
+//        requestBodyMap.put("prompt", formattedPrompt);
+//        requestBodyMap.put("model", "command-r-plus");
+//        requestBodyMap.put("max_tokens", 190);
+//        requestBodyMap.put("temperature", 1.0);
+//        requestBodyMap.put("frequency_penalty", 0.0);
+//        requestBodyMap.put("presence_penalty", 0.2);
+//        requestBodyMap.put("context_size", 6000);
+//        requestBodyMap.put("top_k", 100);
+//        requestBodyMap.put("top_p", 0.95);
+//
+//        String requestBody;
+//        try {
+//            requestBody = objectMapper.writeValueAsString(requestBodyMap);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return "Error creating request body";
+//        }
+
+        // 기존 단기적으로 채팅요청
+        double temperature = 1.0;   // 텍스트 다양성 조절
+        double frequencyPenalty = 0.0;  // 특정단어 반복 생성 방지
+        double presencePenalty = 0.2;   // 특정단어 반복 등장 방지
+        int contextSize = 6000; // 입력 프롬프트와 함께 사용할 수 있는 최대 문맥 크기
+        int topK = 100; // 가장 가능성 높은 'K' 개의 후보 단어들 중 선택
+        double topP = 0.95; // 확률 분포의 상위 'P' 비율을 기반으로 단어 선택
+        int maxTokens = 190;    // 생성할 때 최대 토큰(단어) 수 설정
 
         // JSON 형식으로 요청 본문 생성
-        Map<String, Object> requestBodyMap = new HashMap<>();
-        requestBodyMap.put("prompt", formattedPrompt);
-        requestBodyMap.put("model", "command-r-plus");
-        requestBodyMap.put("max_tokens", 190);
-        requestBodyMap.put("temperature", 1.0);
-        requestBodyMap.put("frequency_penalty", 0.0);
-        requestBodyMap.put("presence_penalty", 0.2);
-        requestBodyMap.put("context_size", 6000);
-        requestBodyMap.put("top_k", 100);
-        requestBodyMap.put("top_p", 0.95);
-
-        String requestBody;
-        try {
-            requestBody = objectMapper.writeValueAsString(requestBodyMap);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Error creating request body";
-        }
+        String requestBody = String.format(
+                "{\"prompt\": \"%s\", \"model\": \"command-r-plus\", \"max_tokens\": %d, " +
+                "\"temperature\": %f, \"frequency_penalty\": %f, \"presence_penalty\": %f, " +
+                "\"context_size\": %d, \"top_k\": %d, \"top_p\": %f}",
+                formattedPrompt,
+                maxTokens,
+                temperature,
+                frequencyPenalty,
+                presencePenalty,
+                contextSize,
+                topK,
+                topP
+        );
 
         HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
@@ -131,7 +175,6 @@ public class ChatService {
                 formattedResponse.append(String.format("%s<br>", trimmedItem));
             }
         }
-
         return formattedResponse.toString();
     }
 
@@ -152,7 +195,6 @@ public class ChatService {
 
 //        StringBuilder result = new StringBuilder(); // 여러 항목을 저장할 StringBuilder
         List<String> result = new ArrayList<>();
-
         boolean found = false; // 매칭 여부를 확인할 플래그
 
         // 정규 표현식에 매칭되는 부분을 찾기
@@ -169,7 +211,6 @@ public class ChatService {
                 result.add(response.trim());
             }
         }
-
         // 결과 반환
         return result;
     }
@@ -181,9 +222,9 @@ public class ChatService {
         // 질문 형식의 쿼리인지 확인하기 위한 정규식 패턴
         String questionPattern = ".*(\\b질문\\b|\\b해도 될까요\\b|\\b물어볼게요\\b|\\b할까요\\b).*";
 
-        // 긴 문장인지 확인하는 기준 (예: 3단어 이상이면 긴 문장으로 간주)
+        // 긴 문장인지 확인하는 기준
         for (String query : keywords) {
-            if (query.split("\\.").length > 2) {
+            if (query.split("[.!?]+").length > 2) {
                 isKeywordSearch = false;
                 break;
             }
@@ -199,7 +240,9 @@ public class ChatService {
 
             // 질문 형식의 쿼리가 들어오면 검색을 수행하지 않음
             if (query.matches(questionPattern)) {
-                return "질문 형식의 쿼리는 검색할 수 없습니다. 구체적인 정보를 제공해 주세요.";
+                return "검색 결과가 없습니다.";
+            } else if (query.equals(prompt)) {
+                return null;
             }
 
             String url = String.format(

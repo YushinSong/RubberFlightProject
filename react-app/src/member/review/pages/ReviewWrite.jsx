@@ -52,8 +52,8 @@ const ReviewWrite = () => {
 
     if (!review.title.trim()){ 
       newError.title = "제목을 작성해주세요";
-    } else if (review.title.trim().length > 30) {
-      newError.title = "제목은 30자 이내로 작성해주세요";
+    } else if (review.title.trim().length > 25) {
+      newError.title = "제목은 25자 이내로 작성해주세요";
     }
 
     if (!review.seat_rate) newError.seat_rate = "별점을 입력해주세요";

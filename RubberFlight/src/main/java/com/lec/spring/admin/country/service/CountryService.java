@@ -18,7 +18,7 @@ public class CountryService {
     // 나라 목록
     @Transactional
     public List<Country> list() {
-        return countryRepository.findAll(Sort.by(Sort.Order.asc("countryIso")));
+        return countryRepository.findAll(Sort.by(Sort.Order.asc("countryName")));
     }
 
     // 나라 추가

@@ -6,6 +6,7 @@ import lombok.Data;
 import java.text.NumberFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 
@@ -74,17 +75,13 @@ public class Flight {
         LocalDateTime depTime = LocalDateTime.parse(date + "T" + depTimeStr + ":00");
         LocalDateTime arrTime = LocalDateTime.parse(date + "T" + arrTimeStr + ":00");
 
-        if (arrTime.isBefore(depTime)) {
-            arrTime = arrTime.plusDays(1);
-        }
-
         this.depSch = depTime;
         this.arrSch = arrTime;
 
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
-        System.out.println("예상 출발 시간" + depTime);
-        System.out.println("예상 도착 시간" + arrTime);
+//        System.out.println("예상 출발 시간" + depTime);
+//        System.out.println("예상 도착 시간" + arrTime);
 
         DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
@@ -103,14 +100,11 @@ public class Flight {
         this.depTime = depTime.format(timeFormatter);
         this.arrTime = arrTime.format(timeFormatter);
 
-        this.depTimeUTC = convertToUTC(depTime, depTimezone);
-        this.arrTimeUTC = convertToUTC(arrTime, arrTimezone);
-
-        Duration duration = Duration.between(depTimeUTC, arrTimeUTC);
+        Duration duration = calculateDuration(depTime, depTimezone, arrTime, arrTimezone);
         this.takeTime = (int) duration.toMinutes();
 
-        System.out.println("UTC 기준 출발 시간" + depTimeUTC);
-        System.out.println("UTC 기준 도착 시간" + arrTimeUTC);
+//        System.out.println("UTC 기준 출발 시간" + depTimeUTC);
+//        System.out.println("UTC 기준 도착 시간" + arrTimeUTC);
 
         this.takeTimeFormat = convertMinutesToHoursAndMinutes(this.takeTime);
 
@@ -119,24 +113,44 @@ public class Flight {
         this.priceFormat = getFormattedPrice(this.price);
     }
 
+    // 타임존 계산
+    private Duration calculateDuration(LocalDateTime depTime, String depTimezone, LocalDateTime arrTime, String arrTimezone) {
+        ZoneId depZoneId = ZoneId.of(depTimezone);
+        ZoneId arrZoneId = ZoneId.of(arrTimezone);
+
+        // 출발지와 도착지의 시간대에 맞게 ZonedDateTime 생성
+        ZonedDateTime depZonedDateTime = depTime.atZone(depZoneId);
+        ZonedDateTime arrZonedDateTime = arrTime.atZone(arrZoneId);
+
+        // UTC로 변환
+        ZonedDateTime depUtcZonedDateTime = depZonedDateTime.withZoneSameInstant(ZoneId.of("UTC"));
+        ZonedDateTime arrUtcZonedDateTime = arrZonedDateTime.withZoneSameInstant(ZoneId.of("UTC"));
+
+        // Duration 계산
+        Duration duration = Duration.between(depUtcZonedDateTime, arrUtcZonedDateTime);
+
+        // Duration이 음수인 경우 (도착 시간이 출발 시간보다 이전으로 나타나는 경우), 날짜가 넘어간 경우 처리
+        if (duration.isNegative()) {
+            duration = duration.plusHours(24);
+        }
+
+        return duration;
+    }
+
     private String getFormattedPrice(int price) {
         NumberFormat format = NumberFormat.getNumberInstance();
         return format.format(price);
     }
 
     private String convertMinutesToHoursAndMinutes(int takeTime) {
+        if (takeTime < 0) {
+            takeTime += 1440;
+        }
         int hours = takeTime / 60;
         int remainingMinutes = takeTime % 60;
         return String.format("%d시간 %d분", hours, remainingMinutes);
     }
 
-
-    private LocalDateTime convertToUTC(LocalDateTime time, String timezone) {
-        ZoneId zoneId = ZoneId.of(timezone);
-        ZonedDateTime zonedDateTime = time.atZone(zoneId);
-        ZonedDateTime utcDateTime = zonedDateTime.withZoneSameInstant(ZoneId.of("UTC"));
-        return utcDateTime.toLocalDateTime();
-    }
 
     private String generateId() {
         return UUID.randomUUID().toString(); // UUID를 사용하여 고유 식별자를 생성

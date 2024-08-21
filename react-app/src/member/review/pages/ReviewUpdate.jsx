@@ -56,8 +56,8 @@ const validateForm = () => {
 
   if (!review.title.trim()){ 
     newError.title = "제목을 작성해주세요";
-  } else if (review.title.trim().length > 30) {
-    newError.title = "제목은 30자 이내로 작성해주세요";
+  } else if (review.title.trim().length > 25) {
+    newError.title = "제목은 25자 이내로 작성해주세요";
   }
   if (review.content.length > 200) newError.content = "내용은 200자 이내로 입력해주세요";
   

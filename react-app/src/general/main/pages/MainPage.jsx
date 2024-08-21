@@ -14,6 +14,8 @@ import { format } from 'date-fns';
 import { color } from 'framer-motion';
 import style from '../CSS/Main.module.css'
 import '../../reserve/css/flatpickr.css'
+import { FaMapMarkerAlt } from 'react-icons/fa';
+import { AiOutlineSearch } from 'react-icons/ai';
  
 const MainPage = () => {
     const [isAirplaneLoaded, setIsAirplaneLoaded] = useState(false);
@@ -310,7 +312,7 @@ useEffect(() => {
         <Header isMain={true}/>
         <div className={style.contentpart}>
             <ThreeScene setIsAirplaneLoaded={setIsAirplaneLoaded} isSearhMode={isSearhMode}/>
-            <Box ref={reserveButtonRef} id={style.reserveButton} onClick={() => setIsSearhMode(true)} className="reserveButton">항공권 조회하기</Box>
+            <Box ref={reserveButtonRef} id={style.reserveButton} onClick={() => setIsSearhMode(true)} className="reserveButton">&gt;&gt; 항공권 조회하기</Box>
             <Box ref={searchBoxRef} id={style.searchBox} className="seachBox">
                 <div id={style.wayBox}>
                     <div id={style.roundway} onClick={() => handleWayChange(true)} className={isRoundWay ? style.actives : ''}>왕복</div> 
@@ -319,85 +321,105 @@ useEffect(() => {
                 <div id={style.selectBox}>
                 <div id={style.airportPart} ref={searchRef}>
                 <div id={style.depPart}>
-                    <div
-                        className="editable-div" id={style.editableDiv}
-                        onClick={() => handleClickEdit('departure')}
-                    >
-                        <div className="airportName" id={style.airportName}>{departure || '출발'}</div>
-                        <div className={style.selectArrow} />
-                    </div>
-                    {activeField === 'departure' && (
-                        <div className={style.searchAirportContainer}>
-                             <div className={style.searchContainer} ref={departureInputRef}>
-                                <input
-                                    className={style.searchAirport}
-                                    type="text"
-                                    value={departureSearchTerm}
-                                    onChange={(e) => handleSearchTermChange(e, 'departure')}
-                                    placeholder="국가, 공항명 검색"
-                                />
-                                {departureSearchTerm && (
-                                    <div className={style.autocompleteResults}>
-                                        {filteredAirports.length > 0 ? (
-                                            filteredAirports.map((airport) => (
-                                                <div
-                                                    key={airport.airportIso}
-                                                    onClick={() => handleSelectAirport(airport.airportIso)}
-                                                >
-                                                    {airport.airportName} ({airport.airportIso})
-                                                </div>
-                                            ))
-                                        ) : (
-                                            <div>No results found</div>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    )}
+                <div className={style.departureLabel}>출발</div>
+                <div
+                  className="editable-div" id={style.editableDiv}
+                  onClick={() => handleClickEdit('departure')}
+                >
+                   <div
+                    className={`airportName ${departure ? style.airportName : style.placeholderText}`}
+                    id={style.airportName}
+                  >{departure || '도시, 공항명 입력'}</div>
+                  <div className={style.selectArrow} />
                 </div>
+                {activeField === 'departure' && (
+                  <div className={style.searchAirportContainer}>
+                    <div className={style.depLabel}>출발 도시/공항</div>
+                    <div className={style.searchContainer} ref={departureInputRef}>
+                      <AiOutlineSearch style={{ marginRight: '10px', fontSize: '20px', color: '#718096' }} />
+                      <input
+                        className={style.searchAirport}
+                        type="text"
+                        value={departureSearchTerm}
+                        onChange={(e) => handleSearchTermChange(e, 'departure')}
+                        placeholder="국가, 공항명 검색"
+                      />
+                      {departureSearchTerm && (
+                        <div className={style.autocompleteResults}>
+                          {filteredAirports.length > 0 ? (
+                            filteredAirports.map((airport) => (
+                              <div
+                                key={airport.airportIso}
+                                onClick={() => handleSelectAirport(airport.airportIso)}
+                              >
+                                <FaMapMarkerAlt style={{ marginRight: '10px', color: '#4682B4' }} />
+                                {airport.airportName} ({airport.airportIso})
+                              </div>
+                            ))
+                          ) : (
+                            <div>No results found</div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
 
                 <div id={style.arrPart}>
+                <div className={style.departureLabel}>도착</div>
                 <div
-                    className="editable-div" id={style.editableDiv}
-                    onClick={() => handleClickEdit('arrival')}
+                  className="editable-div" id={style.editableDiv}
+                  onClick={() => handleClickEdit('arrival')}
                 >
-                    <div className="airportName" id={style.airportName}>{arrival || '도착'}</div>
-                    <div className={style.selectArrow} />
+                  <div
+                    className={`airportName ${arrival ? style.airportName : style.placeholderText}`}
+                    id={style.airportName}
+                  >
+                    {arrival || '도시, 공항명 입력'}
+                  </div>
+                  <div className={style.selectArrow} />
                 </div>
                 {activeField === 'arrival' && (
-                    <div className={style.searchAirportContainer} >
-                         <div className={style.searchContainer} ref={arrivalInputRef}>
-                            <input
-                                className={style.searchAirport}
-                                type="text"
-                                value={arrivalSearchTerm}
-                                onChange={(e) => handleSearchTermChange(e, 'arrival')}
-                                placeholder="국가, 공항명 검색"
-                            />
-                            {arrivalSearchTerm && (
-                                <div className={style.autocompleteResults}>
-                                    {filteredAirports.length > 0 ? (
-                                        filteredAirports.map((airport) => (
-                                            <div
-                                                key={airport.airportIso}
-                                                onClick={() => handleSelectAirport(airport.airportIso)}
-                                            >
-                                                {airport.airportName} ({airport.airportIso})
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <div>No results found</div>
-                                    )}
-                                </div>
-                            )}
+                  <div className={style.searchAirportContainer} >
+                    <div className={style.depLabel}>도착 도시/공항</div>
+                    <div className={style.searchContainer} ref={arrivalInputRef}>
+                      <AiOutlineSearch style={{ marginRight: '10px', fontSize: '20px', color: '#718096' }} />
+                      <input
+                        className={style.searchAirport}
+                        type="text"
+                        value={arrivalSearchTerm}
+                        onChange={(e) => handleSearchTermChange(e, 'arrival')}
+                        placeholder="국가, 공항명 검색"
+                      />
+                      {arrivalSearchTerm && (
+                        <div className={style.autocompleteResults}>
+                          {filteredAirports.length > 0 ? (
+                            filteredAirports.map((airport) => (
+                              <div
+                                key={airport.airportIso}
+                                onClick={() => handleSelectAirport(airport.airportIso)}
+                              >
+                                <FaMapMarkerAlt style={{ marginRight: '10px', color: '#4682B4' }} />
+                                {airport.airportName} ({airport.airportIso})
+                              </div>
+                            ))
+                          ) : (
+                            <div>No results found</div>
+                          )}
                         </div>
+                      )}
                     </div>
+                  </div>
                 )}
-                </div>
-                </div>
+              </div>
+            </div>
+
 
                     <div className={style.datePart}>
+                        <div className={style.departureDateLabel}>
+                            {isRoundWay ? '출발일 - 도착일' : '출발일'}
+                        </div>
                         {isRoundWay ?
                             (
                                 <div className={style.datePickerContainer}>
@@ -430,6 +452,7 @@ useEffect(() => {
                     </div>
                     
                     <div className={style.peoplePart} ref={menuRef}>
+                        <div className={style.departureLabel}>인원</div>
                         <button 
                             className={style.dropdownButton}
                             onClick={() => setIsMenuOpen(!isMenuOpen)}

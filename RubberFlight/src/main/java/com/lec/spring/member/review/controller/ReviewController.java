@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -82,4 +83,15 @@ public class ReviewController {
         return new ResponseEntity<>(reviewService.delete(id), HttpStatus.OK);
     }
 
+    // 리뷰 개수 출력
+    @CrossOrigin
+    @GetMapping("/count")
+    public ResponseEntity<?> getReservationCnt(HttpServletRequest request) {
+        String token = request.getHeader("Authorization").split(" ")[1];
+        Long userId = jwtUtil.getId(token);
+
+        int cnt = reviewService.getReviewCntByUserId(userId);
+
+        return ResponseEntity.ok(Map.of("count", cnt));
+    }
 }

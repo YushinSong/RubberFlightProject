@@ -44,6 +44,7 @@ const PasswordChangeModal = ({ isOpen, onClose }) => {
   const { userInfo } = useUser();
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const backUrl = process.env.REACT_APP_BACK_URL;
 
   const handleSave = async () => {
     if (!newPassword || !confirmPassword) {
@@ -81,7 +82,7 @@ const PasswordChangeModal = ({ isOpen, onClose }) => {
     }
   
     try {
-      const response = await fetch(`http://localhost:8282/mypage/change-password/${userInfo.id}`, {
+      const response = await fetch(`${backUrl}/mypage/change-password/${userInfo.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

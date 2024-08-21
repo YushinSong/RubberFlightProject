@@ -59,13 +59,13 @@ public class FlightInfo {
     @JsonIgnore
     private Review review;
 
-    @Column(nullable = false, name = "dep_terminal")
+    @Column(nullable = true, name = "dep_terminal")
     private String depTerminal;
 
     @Column(nullable = true, name = "dep_gate")
     private String depGate;
 
-    @Column(nullable = false, name = "arr_terminal")
+    @Column(nullable = true, name = "arr_terminal")
     private String arrTerminal;
 
     @Column(nullable = true, name = "arr_gate")

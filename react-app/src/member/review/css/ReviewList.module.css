@@ -10,6 +10,11 @@
     height: 45px;
 }
 
+#reviewBody {
+    height: 700px;
+    /* outline: 2px solid red; */
+}
+
 .reviewPagebtn {
     text-align: center;
 }
@@ -19,7 +24,7 @@
     height: 40px;
     width: 40px;
     margin-right: 10px;
-    background-color: #c9daf8;
+    background-color: #e1eaf8;
     border-radius: 5px;
 }
 

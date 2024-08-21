@@ -8,24 +8,44 @@ import Chat from '../../chat/pages/Chat';
 
 
 const ScheduleEditPart = (props) => {
+    const [pairDates, setPairDates] = useState({});
     const [dates, setDates] = useState([]);
+    const [version, setVersion] = useState(0);
     const [addDate, setAddDate] = useState(new Date());
     const [showChat, setShowChat] = useState(false);
     const [message, setMessage] = useState('');
     const backUrl = process.env.REACT_APP_BACK_URL;
     
     useEffect(() => {
+        let isSubScribed = false;
         fetch(`${backUrl}/dates/${props.ScheduleId}`)
             .then(response => response.json())
             .then(data => {
-                setDates([...data])
+                setDates([...data.left])
+                setVersion(data.right);
+            })
+            .then(() => {
+                if(!isSubScribed){
+                    webSocketService.subscribeTo(props.ScheduleId, setPairDates, "dates");
+                    isSubScribed = true;
+                }
             });
-            
-        webSocketService.subscribeTo(props.ScheduleId, setDates, "dates");
 
     }, [props.ScheduleId]);
     
-    const changeValue = (index, value, valuetype) => {
+    useEffect(() => {
+        if(!pairDates.left) 
+            return;
+
+        setDates([...pairDates.left]);
+        setVersion(pairDates.right);
+
+        // console.log(dates);
+        // console.log(version);
+
+    }, [pairDates]);
+    
+    const changeValue = (index, value, valuetype, version) => {
         let fixedDate = [...dates];
 
         if(valuetype === 0){
@@ -35,7 +55,7 @@ const ScheduleEditPart = (props) => {
         valuetype === 1 && (fixedDate[index].content = value);
 
         setDates([...fixedDate]);
-        handleContentChange(dates, -1);
+        handleContentChange(dates, version, -1);
     };
     
     const handleAddDate = (e) => {
@@ -48,14 +68,14 @@ const ScheduleEditPart = (props) => {
         
         let fixedDate = [...dates];
         fixedDate.push(newObject);
-        handleContentChange(fixedDate, -1);
+        handleContentChange(fixedDate, version + 5, -1);
     }
     const handleDeleteDate = (index) => {
-        handleContentChange(dates, index);
+        handleContentChange(dates, version + 5, index);
     }
     
-    const handleContentChange = (content, deleteIndex) => {
-        webSocketService.sendDates(props.ScheduleId, content, deleteIndex);
+    const handleContentChange = (content, inputversion, deleteIndex) => {
+        webSocketService.sendDates(props.ScheduleId, content, inputversion, deleteIndex);
     }
 
     return (
@@ -83,6 +103,7 @@ const ScheduleEditPart = (props) => {
                         key={index}
                         index={index}
                         dateInfo={date}
+                        version={version}
                         handleChange={changeValue}
                         handleDeleteDate={handleDeleteDate} />
                 )}

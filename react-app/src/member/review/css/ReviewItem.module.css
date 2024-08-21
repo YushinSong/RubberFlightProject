@@ -38,9 +38,14 @@
 }
 
 .airlineName {
+    /* outline: 2px solid red; */
     margin-top: -3px;
     font-size: 25px;
+    width: 195px;
     font-family: 'GyeonggiTitleM';
+    white-space: nowrap;    /* 텍스트를 한 줄로 유지 */
+    overflow: hidden;       /* 넘치는 텍스트 숨김 */
+    text-overflow: ellipsis; /* 넘치는 텍스트에 생략 기호 추가 */
 }
 
 .boardingdate {

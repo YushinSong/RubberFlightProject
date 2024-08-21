@@ -371,7 +371,6 @@ body{
     margin-right: 10px;
     width: 280px;
     position: relative;
-    top: 15vh;
-    max-height: 60vh;
-    padding-bottom: 50px;
+    top: 10px;
+    max-height: 80vh;
 }

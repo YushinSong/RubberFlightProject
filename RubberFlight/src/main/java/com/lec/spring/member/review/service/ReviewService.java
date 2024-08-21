@@ -185,4 +185,8 @@ public class ReviewService {
         }
         return reviewRepository.findByAirlineRate(airline, PageRequest.of(page, size));
     }
+
+    public int getReviewCntByUserId(Long userId) {
+        return reviewRepository.countReviewsByUserId(userId);
+    }
 }

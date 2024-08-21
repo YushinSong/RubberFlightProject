@@ -114,7 +114,7 @@ const ScheduleMain = () => {
                     "Content-Type": 'application/json'
                 }
             });
-            console.log("Server response:", response.data); // Server response for debugging
+            // console.log("Server response:", response.data); // Server response for debugging
         } catch (error) {
             console.error("Error updating checklist item:", error.response ? error.response.data : error.message);
         }
@@ -186,8 +186,8 @@ const ScheduleMain = () => {
     };
 
     const handleEditClick = (itemId, itemName) => {
-        console.log("Editing Item Clicked", itemId, itemName); // 상태를 로그로 확인
-        console.log("Current Editing Item ID", editingItemId);
+        // console.log("Editing Item Clicked", itemId, itemName);
+        // console.log("Current Editing Item ID", editingItemId);
         if (editingItemId === itemId) {
             setEditingItemId(null);
         } else {

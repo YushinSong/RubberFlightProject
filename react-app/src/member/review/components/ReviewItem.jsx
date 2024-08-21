@@ -30,7 +30,7 @@ const ReviewItem = ({review}) => {
           margin: 'auto', width: '90%',
           borderWidth: '1px', borderRadius: '8px',
           padding: '20px', marginTop: '-2px',
-          marginBottom: '40px',
+          marginBottom: '20px',
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
           backgroundColor: 'white', cursor: 'pointer',
           transition: 'background-color 0.3s ease, transform 0.3s ease'

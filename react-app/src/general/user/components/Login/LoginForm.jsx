@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Box, Button, Checkbox, FormControl, FormLabel, HStack, Input, Stack, useToast, Flex } from '@chakra-ui/react';
+import { Box, Button, Checkbox, FormControl, FormLabel, HStack, Input, Stack, useToast, Flex, css, Icon } from '@chakra-ui/react';
 import Cookies from 'js-cookie';
+import { MdPerson, MdLock } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
 import { LoginContext } from '../../contexts/LoginContextProvider';
 import styles from './loginForm.module.css';
@@ -32,47 +33,52 @@ const LoginForm = () => {
   }, []);
 
   return (
-    <>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: 100
-        }}
+    // 배경
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="90vh"
+      p={4}
+      backgroundColor="#ffffff"
+    >
+
+      {/* 이미지 */}
+      <Box className={styles.Logo} onClick={home} cursor="pointer"/>  
+
+      {/* 로그인 배경 */}
+      <Flex
+      direction="column"
+      padding="20px"
+      borderRadius="10px"
+      backgroundColor="#fffff"
+      // borderLeft="2px solid #3c3570"
+      // borderRight="2px solid #3c3570"
+      borderTop="3px solid #3c3570"
+      borderBottom="3px solid #5aa7e1"
+      boxShadow="0px 4px 8px rgba(0, 0, 0, 0.1)"
       >
-        <div
-          style={{
-            backgroundImage: 'url(/images/icons/commercial-plane.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center center',
-            width: '75px',
-            height: '75px',
-            cursor: 'pointer'
-          }}
-          onClick={home}
-        ></div>
-      </div>
 
-      {/* Flex 컨테이너: 왼쪽에는 이미지, 오른쪽에는 로그인 폼 */}
-      <Flex maxWidth="1000px" height="600px" mx="auto" p={6} bg="white" borderRadius="md" boxShadow="md" alignItems="center">
-        {/* 왼쪽 이미지 영역 */}
-        <Box className={styles.banner}
-          flex="1"
-          bgSize="cover"
-          bgPosition="center"
-          height="400px"
-          marginRight="7px"
-          padding="10px"
-        />
+      {/* 로그인 텍스트 */}
+      {/* <Box mb={2} textAlign="center">
+        <h1 style={{ 
+          fontSize: '25px', 
+          fontWeight: 'bold',
+          fontFamily: 'system-ui, sans-serif'
+          }}>Login</h1>
+      </Box> */}
 
-        {/* 오른쪽 로그인 폼 영역 */}
-        <Box flex="1" p={4}>
-          <h2 style={{ textAlign: 'center', marginBottom: '1rem', fontSize: 30 }}>Login</h2>
+        <Box p={4}
+        >
           <form onSubmit={(e) => onLogin(e)}>
             <Stack spacing={4}>
               <FormControl id="username">
-                <FormLabel>Username</FormLabel>
+                <FormLabel>
+                <HStack spacing={2} align="center">
+                  <Icon as={MdPerson} color="black" boxSize={5} />
+                  <span  className={styles.subjectCustom}>Username</span>
+                </HStack></FormLabel>
                 <Input
                   type="text"
                   placeholder="Username"
@@ -83,8 +89,13 @@ const LoginForm = () => {
                 />
               </FormControl>
 
-              <FormControl id="password">
-                <FormLabel>Password</FormLabel>
+                <FormControl id="password">
+                  <FormLabel>
+                    <HStack spacing={2} align="center">
+                     <Icon as={MdLock} color="black" boxSize={5} />
+                     <span className={styles.subjectCustom}>Password</span>
+                    </HStack>
+                  </FormLabel>
                 <Input
                   type="password"
                   placeholder="Password"
@@ -96,15 +107,29 @@ const LoginForm = () => {
 
               <FormControl>
                 <Stack direction="row" align="center">
-                  <Checkbox id="remember-id" name="rememberId" defaultChecked={!!rememberUserId}>
-                    Remember me
+                  <Checkbox
+                  id="remember-id" 
+                  name="rememberId" 
+                  defaultChecked={!!rememberUserId}
+                  sx={{
+                    '& .chakra-checkbox__control': {
+                      backgroundColor: 'white', 
+                    },
+                    '& .chakra-checkbox__control[data-checked]': {
+                      backgroundColor: 'blue.500', 
+                    },
+                  }}
+                  colorScheme='blue'
+                  > <p className={styles.subjectCustom}>Remember me</p>
                   </Checkbox>
                 </Stack>
               </FormControl>
 
               <hr />
               <div>
-                <h4 style={{ fontWeight: '500' }}>Log in using your account on</h4>
+                <h4 style={{ fontWeight: '500' , fontFamily:'system-ui, sans-serif'}}>
+                  Log in using your account on 
+                  </h4>
               </div>
 
               {/* 소셜 로그인 버튼 부분 */}
@@ -178,18 +203,25 @@ const LoginForm = () => {
               </div>
 
               <HStack spacing={4} align="center" justify="right">
-                <Button as={Link} to="/selectJoin" variant="link" color={'#586D92'}>
+                <Button as={Link} to="/selectJoin" variant="link" color={'black'} fontFamily={'system-ui, sans-serif'}>
                   Join
                 </Button>
-                <Button type="submit" bg={'#586D92'} color={'white'}>
+                <Button 
+                type="submit" 
+                bg={'#f7f7f7'} 
+                color={'black'} 
+                borderBottom={'1px solid lightgrey'} 
+                fontFamily={'system-ui, sans-serif'}
+                _hover={{}}
+                >
                   Login
                 </Button>
               </HStack>
             </Stack>
           </form>
         </Box>
-      </Flex>
-    </>
+        </Flex>
+    </Box>
   );
 };
 

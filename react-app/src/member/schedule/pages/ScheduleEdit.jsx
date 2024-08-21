@@ -15,6 +15,7 @@ const ScheduleEdit = () => {
     const [title, setTitle] = useState([]);
     const [shareUsername, setShareUsername] = useState("");
     const [shareTeam, setShareTeam] = useState([]);
+    const [activeUsers, setActiveUsers] = useState([]);
     const [activeUsersPic, setActiveUsersPic] = useState([]);
     const token = Cookies.get('accessToken');
     const titleRef = useRef(null);
@@ -29,6 +30,10 @@ const ScheduleEdit = () => {
         if(!userInfo.id) return;
         getTeam();
     }, [userInfo]);
+
+    useEffect(()=>{
+        console.log(`현재 접속한 유저들 프사 = ${activeUsersPic}`);
+    }, [activeUsersPic]);
     
     const getTeam = () => {
         axios({
@@ -75,27 +80,46 @@ const ScheduleEdit = () => {
     }
 
     useEffect(() => {
+        let isMounted = false;
+
         fetch(`${backUrl}/title/${id}`)
             .then(response => response.json())
             .then(data => setTitle(data.title));
 
         webSocketService.connect((newContent) => {
-            if (newContent.title) {
+            if (newContent.title && isMounted) {
                 setTitle(newContent.title);
             } 
-        }, id);
+        }, id).then(() => {
+            if(!isMounted){
+                webSocketService.joinPage(id, token);
+                webSocketService.subscribeTo(id, setTitle, "title");
+                webSocketService.subscribeTo(id, setActiveUsers, "users");
+                isMounted = true;
+            }
+        });
 
-        webSocketService.joinPage(id, token);
-
-
-        webSocketService.subscribeTo(id, setTitle, "title");
-        webSocketService.subscribeTo(id, setActiveUsersPic, "users");
+        return () => {
+            if(isMounted){
+                console.log("disconnect");
+                webSocketService.disconnect();
+                isMounted = false; 
+            }
+        };
 
     }, [id]);
 
+    
     useEffect(() => {
-        console.log(activeUsersPic);
-    }, [activeUsersPic]);
+        const fetchActivePics = async () => {
+            let tempActivePics = await Promise.all(activeUsers.map(async (userId) => {
+                const response = await axios.get(`${backUrl}/user/${userId}/info`);
+                return response.data.image;
+            }));
+            setActiveUsersPic([...tempActivePics]);
+        };
+        fetchActivePics();
+    }, [activeUsers]);
 
     useEffect(() => {
         const handleBeforeUnload = (event) => {

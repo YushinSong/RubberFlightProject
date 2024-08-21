@@ -39,7 +39,7 @@ public class U {
         String originalFileName = file.getOriginalFilename(); // 원본 이름
 
         if(originalFileName == null || originalFileName.isEmpty()){
-            System.out.println("\t파일이 없습니다.");
+//            System.out.println("\t파일이 없습니다.");
             return;
         }
         System.out.println("""
@@ -59,11 +59,11 @@ public class U {
             BufferedImage bufferedImage = ImageIO.read(file.getInputStream()); // 이미지 <- InputStream
                                                             // 이미지가 아니면 null 리턴
             if(bufferedImage != null){
-                System.out.println("""
-                        이미지 파일입니다: %d X %d
-                        """.formatted(bufferedImage.getWidth(), bufferedImage.getHeight()));
+//                System.out.println("""
+//                        이미지 파일입니다: %d X %d
+//                        """.formatted(bufferedImage.getWidth(), bufferedImage.getHeight()));
             } else {
-                System.out.println("\t이미지 파일이 아닙니다.");
+//                System.out.println("\t이미지 파일이 아닙니다.");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

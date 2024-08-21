@@ -6,6 +6,15 @@ public class DateListDTO {
     private Long scheduleId;
     private List<Date> dates;
     private Integer deleteIndex;
+    private Long editVersion;
+
+    public Long getEditVersion() {
+        return editVersion;
+    }
+
+    public void setEditVersion(Long editVersion) {
+        this.editVersion = editVersion;
+    }
 
     public Integer getDeleteIndex() {
         return deleteIndex;

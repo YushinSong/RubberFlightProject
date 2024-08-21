@@ -86,7 +86,7 @@ const CouponForm = () => {
             {/* 쿠폰 코드 입력폼 */}
             <FormControl>
               <Flex align="center" justify="center">
-                <FormLabel fontSize="19px" textAlign="center" fontFamily="Noto Sans KR">쿠폰 코드</FormLabel>
+                <FormLabel fontSize="19px" textAlign="center" fontFamily="Noto Sans KR" fontWeight="bold">쿠폰 코드</FormLabel>
               </Flex>
             </FormControl>
             <FormControl>
@@ -102,7 +102,7 @@ const CouponForm = () => {
             {/* 할인 퍼센트 입력폼 */}
             <FormControl>
               <Flex align="center" justify="center">
-                <FormLabel fontSize="19px" textAlign="center" fontFamily="Noto Sans KR">할인 퍼센트</FormLabel>
+                <FormLabel fontSize="19px" textAlign="center" fontFamily="Noto Sans KR" fontWeight="bold">할인 퍼센트</FormLabel>
               </Flex>
             </FormControl>
             <FormControl>
@@ -123,7 +123,7 @@ const CouponForm = () => {
             {/* 설명 입력폼 */}
             <FormControl>
               <Flex align="center" justify="center">
-                <FormLabel fontSize="19px" textAlign="center" fontFamily="Noto Sans KR">설명</FormLabel>
+                <FormLabel fontSize="19px" textAlign="center" fontFamily="Noto Sans KR" fontWeight="bold">설명</FormLabel>
               </Flex>
             </FormControl>
             <FormControl>
@@ -139,7 +139,7 @@ const CouponForm = () => {
             {/* 항공사 이름 입력폼 */}
             <FormControl>
               <Flex align="center" justify="center">
-                <FormLabel fontSize="19px" textAlign="center" fontFamily="Noto Sans KR">항공사 이름</FormLabel>
+                <FormLabel fontSize="19px" textAlign="center" fontFamily="Noto Sans KR" fontWeight="bold">항공사 이름</FormLabel>
               </Flex>
             </FormControl>
             <FormControl>

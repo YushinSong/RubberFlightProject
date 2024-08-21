@@ -17,6 +17,7 @@ const FlightInfoTabs = ({ pastFlights = [], upcomingFlights = [], reviewList = [
       mt={7}
       ml={7}
       mr={7}
+      mb={7}
     >
       <TabList>
         <Tab _selected={{ color: "#6d9eeb", borderBottom: "2px solid #6d9eeb", fontWeight: "bold" }}>

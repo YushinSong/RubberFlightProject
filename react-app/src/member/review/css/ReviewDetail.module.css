@@ -6,10 +6,11 @@
 }
 
 .reviewtitle{
-    font-size: 40px;
-    margin: 30px 0 -15px 60px;
     font-family: 'GyeonggiTitleM';
     white-space: nowrap;    /* 텍스트를 한 줄로 유지 */
+    width: 650px;
+    font-size: 35px;
+    margin: 30px 0 -15px 50px;
 }
 
 .reviewRate {

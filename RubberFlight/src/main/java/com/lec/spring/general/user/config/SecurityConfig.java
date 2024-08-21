@@ -118,6 +118,7 @@ public class SecurityConfig {
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
                         UsernamePasswordAuthenticationFilter.class);
 
+
         // --------------------------------------------------
         // CORS 설정
         http
@@ -142,6 +143,8 @@ public class SecurityConfig {
                     return configuration;
                 }
             }));
+
+
         return http.build();
     }
 

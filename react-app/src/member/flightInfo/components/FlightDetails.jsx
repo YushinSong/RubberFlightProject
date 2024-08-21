@@ -18,6 +18,12 @@ const FlightDetails = ({ flightInfo, timetable, history }) => {
     return new Date(dateString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
   };
 
+  const info = flightInfo || {};
+  const depSch = new Date(info.depSch);
+  const now = new Date();
+
+  const gap = flightInfo.depIata.length > 5 || flightInfo.depAirport.length > 10 ? 20 : 110;
+
   return (
     <Flex direction="column" mb={4}>
       <Flex justify="space-between">
@@ -42,7 +48,7 @@ const FlightDetails = ({ flightInfo, timetable, history }) => {
         {/* 1 */}
         <Flex direction="column" gap={16} align="center">
           <Text fontSize="xl">{formatTime(flightInfo.depSch) || "-"}</Text>
-          <Text fontSize="md" fontWeight="bold" mt={5} mb={5} color="gray.500">
+          <Text fontSize="14px" fontWeight="bold" mt={5} mb={5} color="gray.500" whiteSpace="nowrap">
           {calculateFlightDuration(flightInfo.depSch, flightInfo.arrSch)}
           </Text>
           <Text fontSize="xl">{formatTime(flightInfo.arrSch) || "-"}</Text>
@@ -63,10 +69,10 @@ const FlightDetails = ({ flightInfo, timetable, history }) => {
 
         {/* 3 */}
         <Box pl={12}>
-          <Flex justify="center" direction="row" align="center" gap={110} mb={8}>
+          <Flex justify="center" direction="row" align="center" gap={gap} mb={8} wrap="nowrap">
             <Text fontSize="2xl" fontWeight="bold">{flightInfo.depIata || "-"}</Text>
             <Text fontSize="lg" fontWeight="bold" color="blue.500">{flightInfo.depAirport || "-"}</Text>
-            <Text fontSize="md" color="gray.500">출발</Text>
+            <Text fontSize="14px" color="gray.500" whiteSpace="nowrap">출발</Text>
           </Flex>
 
           <Box textAlign="center" borderWidth="1px" borderColor="gray.300" borderRadius="md" p={4} mb={2}>
@@ -91,15 +97,17 @@ const FlightDetails = ({ flightInfo, timetable, history }) => {
           </Box>
 
           <Text fontSize="sm" color="red.500" mb={8} align="right">
-            {delayHours > 0 
+            {now > depSch && delayInMinutes > 0 && (
+            delayHours > 0 
               ? `총 ${delayHours}시간 ${delayMinutes}분 지연되었습니다.` 
-              : `총 ${delayMinutes}분 지연되었습니다.`}
+              : `총 ${delayMinutes}분 지연되었습니다.`
+            )}
           </Text>
 
           <Flex justify="center" direction="row" align="center" gap={90}>
             <Text fontSize="2xl" fontWeight="bold">{flightInfo.arrIata || "-"}</Text>
             <Text fontSize="lg" fontWeight="bold" color="blue.500">{flightInfo.arrAirport || "-"}</Text>
-            <Text fontSize="md" color="gray.500">도착</Text>
+            <Text fontSize="14px" color="gray.500" whiteSpace="nowrap">도착</Text>
           </Flex>
         </Box>
       </Flex>

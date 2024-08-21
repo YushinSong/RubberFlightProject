@@ -13,7 +13,7 @@ const AirLineReviewList = () => {
   const [reviews, setReviews] = useState([]);
   const [sortOrder, setSortOrder] = useState("latest");
   const [currentPage, setCurrentPage] = useState(0); // 초기 페이지 번호 설정
-  const [pageSize] = useState(5); // 한 페이지에 보여줄 리뷰 개수
+  const [pageSize] = useState(6); // 한 페이지에 보여줄 리뷰 개수
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
   const [airlineNames, setAirlineNames] = useState([]);
@@ -159,7 +159,6 @@ const AirLineReviewList = () => {
 
           <div className={styles.reviewBody}>
             <Tabs variant="line">
-
               <TabList>
                 <Tab fontSize={20} _selected={{ color: "#6d9eeb", borderBottom: "2px solid #6d9eeb", fontWeight: "bold" }} onClick={handleLatestClick}>
                   최신순

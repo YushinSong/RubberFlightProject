@@ -109,4 +109,16 @@ public class CouponController {
         }
         return new ResponseEntity<>("유효하지 않은 쿠폰 코드입니다.", HttpStatus.BAD_REQUEST);
     }
+
+    // 사용자 쿠폰 개수
+    @CrossOrigin
+    @GetMapping("/count")
+    public ResponseEntity<?> getReservationCnt(HttpServletRequest request) {
+        String token = request.getHeader("Authorization").split(" ")[1];
+        Long userId = jwtUtil.getId(token);
+
+        int cnt = couponService.getCouponCountByUserId(userId);
+
+        return ResponseEntity.ok(Map.of("count", cnt));
+    }
 }

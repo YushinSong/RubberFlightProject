@@ -20,9 +20,9 @@ const CouponPage = () => {
 
   return (
     <Box p={5} margin="0 auto"> 
-      <Header isMain={true} />
+      <Header isMain={false} />
       
-      <Flex direction="column" align="center" justify="center" mt={200}>
+      <Flex direction="column" align="center" justify="center" >
 
         <Flex direction="column" mb={10} width="1100px" justify="flex-start"> 
           <Box display="flex">

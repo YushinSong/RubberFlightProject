@@ -110,7 +110,7 @@ const UserInfoModal = ({ isOpen, onClose }) => {
         window.location.reload();
       });
 
-      console.log(data);
+      // console.log(data);
       await loginCheck();
       onClose();
     } catch (error) {

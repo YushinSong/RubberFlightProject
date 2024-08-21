@@ -56,6 +56,9 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     // 해당 유저 모든 리뷰 조회
     List<Review> findByFlightInfo_ReserveUserId(Long userId);
 
+    // 리뷰 개수
+    @Query("SELECT COUNT(r) FROM ft_review r JOIN r.flightInfo f JOIN f.reserve res WHERE res.user.id = :userId")
+    int countReviewsByUserId(Long userId);
 }
 
 

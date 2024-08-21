@@ -108,39 +108,40 @@ const ReviewList = () => {
           <Image src={Review} width="30px" />
           <Text as="h1" size="lg" ml={3} color="#0e0e0f" fontFamily= "Roboto" fontSize="27px" fontWeight="bold">나의 리뷰</Text>
         </Flex>
-        <Tabs variant="line" mt={7} ml={7} mr={7}>
-          <TabList>
-            <Tab _selected={{color: "#6d9eeb", borderBottom: "2px solid #6d9eeb", fontWeight: "bold" }}
-            onClick={handleLatestClick}>
-              최신순
-            </Tab>
-            <Tab _selected={{color: "#6d9eeb", borderBottom: "2px solid #6d9eeb", fontWeight: "bold" }}
-            onClick={handleRateClick}>
-              별점순
-            </Tab>
-          </TabList>
-          <TabPanels
-          style={{
-            maxWidth: '800px',
-            minWidth: '800px',
-            margin: 'auto',
-            marginTop: '20px',
-            width: '90%',
-            height: '88vh', 
-          }}
-          >
-            <TabPanel>
-              {reviews.length > 0 ? reviews.map((review) => {
-                  return (<ReviewItem key={review.id} review={review} />);})
-                : <div className={styles.noReview}>작성된 리뷰가 없습니다.</div>} 
-            </TabPanel>
-            <TabPanel>
-              {reviews.length > 0 ? reviews.map((review) => {
-                  return (<ReviewItem key={review.id} review={review} />);})
-                : <div className={styles.noReview}>작성된 리뷰가 없습니다.</div>} 
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+        <div id={styles.reviewBody}>
+          <Tabs variant="line" mt={7} ml={7} mr={7}>
+            <TabList>
+              <Tab _selected={{color: "#6d9eeb", borderBottom: "2px solid #6d9eeb", fontWeight: "bold" }}
+              onClick={handleLatestClick}>
+                최신순
+              </Tab>
+              <Tab _selected={{color: "#6d9eeb", borderBottom: "2px solid #6d9eeb", fontWeight: "bold" }}
+              onClick={handleRateClick}>
+                별점순
+              </Tab>
+            </TabList>
+            <TabPanels
+            style={{
+              maxWidth: '800px',
+              minWidth: '800px',
+              margin: 'auto',
+              marginTop: '10px',
+              width: '90%',
+            }}
+            >
+              <TabPanel>
+                {reviews.length > 0 ? reviews.map((review) => {
+                    return (<ReviewItem key={review.id} review={review} />);})
+                  : <div className={styles.noReview}>작성된 리뷰가 없습니다.</div>} 
+              </TabPanel>
+              <TabPanel>
+                {reviews.length > 0 ? reviews.map((review) => {
+                    return (<ReviewItem key={review.id} review={review} />);})
+                  : <div className={styles.noReview}>작성된 리뷰가 없습니다.</div>} 
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </div>
         {totalPages > 0 && (
           <Box className={styles.reviewPagebtn}>
             <button className={`${styles.reviewPagebtn} ${styles.reviewPageBtn} ${styles.reviewPrevbtn}`}

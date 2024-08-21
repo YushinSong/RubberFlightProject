@@ -2,5 +2,15 @@
     font-family: system-ui, sans-serif !important;
     text-align: left;
     font-size: 17px !important;
+    border-bottom: 1px solid #ced4da !important;
 }
 
+.homeBtn{
+        background-image : url(../../../../assets/images/main/logo.webp);
+        background-size: cover;
+        background-position: center center;
+        width: 135px;
+        height: 75px;
+        cursor: pointer
+
+}

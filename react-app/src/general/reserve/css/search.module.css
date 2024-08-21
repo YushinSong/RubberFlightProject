@@ -1,13 +1,81 @@
 /* search.css */
 
+.searchHeaderContainer{
+  background: linear-gradient(to bottom, #B0C9E6, #D5E1EB, #F9FBFF);
+  width: 100vw;
+  height: 400px;
+  position: relative;
+  left: -20px;
+  top: -170px;
+  margin-bottom: -160px;
+}
+#searchplane{
+  background-image: url('../../../assets/images/flightInfo/searchplane.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: rotate(-90deg) translateY(0%);
+  z-index: 1;
+  filter: drop-shadow(-3px 2px 3px rgba(34, 39, 53, 0.033)) /* Left and bottom shadow */;
+  animation: fly 7s linear infinite;
+}
+@keyframes fly {
+  from {
+    top: 70%;
+    transform: rotate(-90deg) translateY(100%);
+  }
+  to {
+    top: -70%;
+    transform: rotate(-90deg) translateY(-400%);
+  }
+}
+#searchCloud{
+  background-image: url('../../../assets/images/flightInfo/cartooncloud.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 1000px;
+  height: 350px;
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translateX(-35%);
+  z-index: 2;
+  /* filter: drop-shadow(-3px 2px 3px rgba(34, 39, 53, 0.077)); */
+}
+.searchMessage {
+  /* background-color: #d9f3fd; */
+  text-align:right;
+  margin-bottom: 40px;
+  font-weight: bold;
+  color: #697fa5;
+  font-size: 21px;
+  font-family: "KIMM_Light";
+  letter-spacing: 0.5px;
+  position: relative;
+  top: 340px;
+  width: 700px;
+  position: absolute;
+  left: 50%;
+  top: 87%;
+  transform: translateX(-15%);
+  z-index: 3;
+}
+
 .searchBar {
   width: 1200px;
   padding: 0 0 5px 0;
-  margin: 200px auto 0 auto; 
+  margin: 0 auto 0 auto; 
   border-radius: 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   box-sizing: border-box;
+  margin-bottom: 100px;
 }
 
 .contentpart {
@@ -77,6 +145,7 @@
   gap: 30px;
   align-items: center;
   justify-content: center;
+  z-index: 10;
 }
 
 #searchAirport {
@@ -142,7 +211,8 @@
   top: 105px;
   border-radius: 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  animation: slideUp 0.3s ease-in-out; 
+  animation: slideUp 0.3s ease-in-out;
+  background-color: #ffffff !important; 
 }
 
 .searchContainer {
@@ -407,6 +477,11 @@ input {
   /* outline: 2px solid red; */
 }
 
+.subButton:hover { 
+  transform: scale(1.01);  
+  background-color: #6d98de;       
+}
+
 .results {
   /* outline: 2px solid slateblue; */
   margin-top: 50px;
@@ -417,7 +492,7 @@ input {
 
 .resultsContents {
   /* outline: 2px solid red; */
-  width: 100%;
+  width: 1100px;
   max-width: 1215px;
   display: flex;
   flex-direction: column;
@@ -429,6 +504,8 @@ input {
   padding: 0;
   margin: 0;
   width: 100%;
+  border-left: 2px solid #4875bd;
+  padding-left: 30px;
 }
 
 .results li {
@@ -441,12 +518,33 @@ input {
   border-radius: 30px;
   background-color: #ffffff;
   transition: transform 0.3s ease;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  position: relative;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .results li:hover {
   transform: scale(1.01);
+}
+
+.results li::before {
+  content: '';
+  position: absolute;
+  left: -36px; 
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: #4875bd; 
+  border-radius: 50%;
+}
+
+.results li:hover::before {
+  transform: translateX(50%) translateY(-50%) scale(1.01);
+}
+
+.results li:last-child {
+  border-bottom: none;
 }
 
 .flights {
@@ -463,10 +561,47 @@ input {
   /* outline: 2px solid sandybrown; */
 }
 
+.airlineLable1 {
+  display: flex;
+  font-family: "KIMM_Light";
+  font-size: 15px;
+  padding-bottom: 30px;
+  color: #7b7b7b;
+}
+
+.airlineLable2 {
+  display: flex;
+  font-family: "KIMM_Light";
+  font-size: 15px;
+  margin-bottom: 4px;
+  color: #7b7b7b;
+}
+
+.airlineItem {
+  display: flex;
+  align-items: center;
+  font-family: 'Verdana', Geneva, Tahoma, sans-serif;
+  font-size: 19px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.airlineItemNoMargin {
+  display: flex;
+  align-items: center;
+  font-family: 'Verdana', Geneva, Tahoma, sans-serif;
+  font-size: 19px;
+}
+
+.airlineIcon {
+  font-size: 20px;
+  color: #0056a0;
+  margin-left: 10px;
+}
+
 .flightAirline {
   /* outline: 2px solid salmon; */
   width: 230px;
-  margin-right: 50px;
   font-size: 1.3rem;
   font-weight: bold;
   /* margin-right: 15px; */
@@ -475,46 +610,62 @@ input {
   justify-content: center;
 }
 
+.flightTimesContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.airlineLable {
+  display: flex;
+  font-family: "KIMM_Light";
+  font-size: 15px;
+  margin-bottom: 4px;
+  color: #7b7b7b;
+}
+
 .flightTimes {
   /* outline: 2px solid salmon; */
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 10px;
-  margin: 0 10px 0 50px;
+  flex-direction: row;
+  justify-content: left;
   /* margin-right: -50px; */
 }
 
 .flightTimes2 {
   /* outline: 2px solid salmon; */
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  font-size: 17px;
-  padding: 0 10px;
-  margin: 0 10px 0 5px;
+  flex-direction: row;
+  justify-content: left;
+  margin-top: 10px;
   /* margin-right: -50px; */
 }
 
-.airplane {
+.airplane, .airplane1 {
   /* outline: 2px solid chartreuse; */
-  height: 60px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-top: 10px;
 }
 
-.airplane1 {
-  /* outline: 2px solid cadetblue; */
-  margin-top: 5px;
-  margin-bottom: 15px;
-}
-
-.flightTakeTimes {
+.flightTakeTimes div {
   /* outline: 2px solid salmon; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   /* padding: 0 10px; */
+  margin-left: 40px;
+  color: #000000d0;
+  font-family: 'Verdana', Geneva, Tahoma, sans-serif;
+  font-weight: 600;
   font-size: 17px;
-  margin: 0 55px;
+}
+
+.flightTakeTimes div:first-child {
+  margin-top: 30px;
+}
+
+.flightTakeTimes div:last-child {
+  margin-top: 15px;
 }
 
 .flightDepTime,
@@ -522,6 +673,8 @@ input {
   display: flex;
   align-items: center;
   font-size: 17px;
+  font-family: 'Verdana', Geneva, Tahoma, sans-serif;
+  font-size: 19px;
   /* outline: 2px solid seagreen; */
 }
 
@@ -538,23 +691,23 @@ input {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  font-size: 17px;
-  color: #FF1414;
+  font-size: 19px;
   flex-shrink: 0; /* 가격 정보는 항상 고정된 크기를 유지 */
 }
 
 .verticalLine {
-  /* outline: 2px solid rebeccapurple; */
   width: 1px;
   height: 60px;
   background-color: rgb(155, 155, 155);
-  margin-right: 120px;
+  margin-right: 90px;
 }
 
 .totalPrice {
+  font-family: 'Verdana', Geneva, Tahoma, sans-serif;
   font-weight: bold;
   white-space: nowrap;
   justify-content: flex-end;
+  color: #FF1414;
 }
 
 .pageButtons {
@@ -619,6 +772,14 @@ input {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.noResultsMessage {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+  margin-top: 60px;
+  margin-bottom: 400px;
 }
 
 .errorMessage {

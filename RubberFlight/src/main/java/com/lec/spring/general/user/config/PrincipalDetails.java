@@ -18,13 +18,13 @@ public class PrincipalDetails implements UserDetails {
 
     // 일반 로그인 용 생성자
     public PrincipalDetails(User user){
-        System.out.println("UserDetails(user) 생성: " + user);
+//        System.out.println("UserDetails(user) 생성: " + user);
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.println("getAuthorities() 호출");
+//        System.out.println("getAuthorities() 호출");
 
         Collection<GrantedAuthority> collect = new ArrayList<>();
 

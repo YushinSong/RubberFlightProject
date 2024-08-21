@@ -80,7 +80,7 @@ const MenuBar = () => {
                     alignItems: "center",
                     fontSize: "17px",
                     fontFamily: "Noto Sans KR",
-                    fontWeight: "900",
+                    fontWeight: "bold",
                   }}
                   _hover={{
                     color: "#007bff",

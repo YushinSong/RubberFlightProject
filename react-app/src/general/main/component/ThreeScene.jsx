@@ -71,7 +71,7 @@ function CameraAnimation({ isLoaded, isSearhMode }) {
     }else{
       const targetPosition = [200, 120, -230];
       camera.position.lerp(new THREE.Vector3(...targetPosition), delta * 2);
-      camera.lookAt(80, 10, 30);
+      camera.lookAt(10, 20, 30);
     }
   });
   return null;

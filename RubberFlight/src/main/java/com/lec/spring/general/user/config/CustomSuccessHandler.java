@@ -47,13 +47,17 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         Cookie jwtCookie = new Cookie("accessToken", token);
         jwtCookie.setHttpOnly(false); // Allow JavaScript access
-        jwtCookie.setSecure(true); // Use only over HTTPS
+        jwtCookie.setSecure(false); // Use only over HTTPS
         jwtCookie.setPath("/"); // Available for all paths
         jwtCookie.setMaxAge(60 * 60 * 600); // Set expiration time
 
         response.addCookie(jwtCookie);
 
         response.addCookie(createCookie("Authorization", token));
+
+
+        System.out.println("리다이렉트 경로: " + frontServerUrl + "/");
+
         response.sendRedirect(frontServerUrl + "/");
     }
 

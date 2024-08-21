@@ -149,8 +149,8 @@ const LiveFlight = () => {
         <div className={styles.earthCon}>
           {flightData && arrAirportData && depAirportData && (
             <div className={styles.aboutFlight}>
-              <span className={styles.pp}>Arrival Airport:</span> {arrAirportData.name}<br />
               <span className={styles.pp}>Departure Airport:</span> {depAirportData.name}<br />
+              <span className={styles.pp}>Arrival Airport:</span> {arrAirportData.name}<br />
               <span className={styles.pp}>Status:</span> <span id={styles.ppp}>{getStatusMessage(flightData.status)}</span><br />
               <span className={styles.pp}>Speed:</span> {flightData.horizontal} km/h<br />
             </div>

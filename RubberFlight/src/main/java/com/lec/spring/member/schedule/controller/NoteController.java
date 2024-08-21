@@ -9,6 +9,8 @@ import com.lec.spring.member.schedule.domain.JoinRequestDTO;
 import com.lec.spring.member.schedule.domain.Schedule;
 import com.lec.spring.member.schedule.service.DateService;
 import com.lec.spring.member.schedule.service.ScheduleService;
+import com.nimbusds.jose.util.Pair;
+import jakarta.persistence.Tuple;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -53,73 +55,85 @@ public class NoteController {
     @CrossOrigin
     @MessageMapping("/dates/{id}")
     @SendTo("/topic/dates/{id}")
-    public List<Date> fixDates(@RequestBody DateListDTO dates) {
+    public Pair<List<Date>, Long> fixDates(@RequestBody DateListDTO dates) {
         if(dates.getDeleteIndex() != -1)
             dateService.delete(dates.getDates().get(dates.getDeleteIndex()).getId());
         else{
             for(Date date: dates.getDates()){
                 if(date.getId() == null)
                     dateService.save(dates.getScheduleId(), date);
-                else
+                else{
                     dateService.update(date);
+                }
             }
         }
+        if(dates.getEditVersion() != -1)
+            scheduleInputVersion.put(dates.getScheduleId(), dates.getEditVersion());
+        else
+            System.out.println("-1이 버전으로 들어옴");
         scheduleService.updateEditDate(dates.getScheduleId());
         List<Date> allList = dateService.findAllBySchedule(dates.getScheduleId());
-        return allList;
+        Pair<List<Date>, Long> result = Pair.of(allList, scheduleInputVersion.get(dates.getScheduleId()));
+        return result;
     }
 
     @CrossOrigin
     @GetMapping("/dates/{id}")
-    public List<Date> getDates(@PathVariable Long id) {
+    public Pair<List<Date>, Long> getDates(@PathVariable Long id) {
         List<Date> allList = dateService.findAllBySchedule(id);
-        return allList;
+        if(!scheduleInputVersion.containsKey(id))
+            scheduleInputVersion.put(id, 0L);
+
+        Pair<List<Date>, Long> result = Pair.of(allList, scheduleInputVersion.get(id));
+        return result;
     }
 
-    private final Map<Long, Set<String>> activeUsersMap = new ConcurrentHashMap<>();
+    private final Map<Long, Set<Long>> activeUsersMap = new ConcurrentHashMap<>();
+    private final Map<Long, Long> scheduleInputVersion = new ConcurrentHashMap<>();
 
     @CrossOrigin
     @MessageMapping("/join/{id}")
     @SendTo("/topic/users/{id}")
-    public Set<String> joinUser(@RequestBody JoinRequestDTO request) {
+    public Set<Long> joinUser(@RequestBody JoinRequestDTO request) {
         Long scheduleId = request.getScheduleId();
         Long userId = jwtUtil.getId(request.getUserToken());
-        User enteredUser = userService.findById(userId);
-        String imageUrl = enteredUser.getImage();
 
-        activeUsersMap.computeIfAbsent(scheduleId, k -> new ConcurrentSkipListSet<>()).add(imageUrl);
-        Set<String> usersPics = activeUsersMap.get(scheduleId);
+        activeUsersMap.computeIfAbsent(scheduleId, k -> new ConcurrentSkipListSet<>()).add(userId);
+        if(!scheduleInputVersion.containsKey(scheduleId))
+            scheduleInputVersion.put(scheduleId, 0L);
 
-        return usersPics;
+        Set<Long> users = activeUsersMap.get(scheduleId);
+
+        System.out.println("접속한 유저들" + users);
+
+        return users;
     }
 
 
     @CrossOrigin
     @MessageMapping("/leave/{id}")
     @SendTo("/topic/users/{id}")
-    public Set<String> leaveUser(@RequestBody JoinRequestDTO request) {
+    public Set<Long> leaveUser(@RequestBody JoinRequestDTO request) {
         Long scheduleId = request.getScheduleId();
         Long userId = jwtUtil.getId(request.getUserToken());
-        User enteredUser = userService.findById(userId);
-        String imageUrl = enteredUser.getImage();
 
-        Set<String> usersPics = activeUsersMap.get(scheduleId);
-        if (usersPics != null) {
-            usersPics.remove(imageUrl);
-            if (usersPics.isEmpty()) {
+        Set<Long> users = activeUsersMap.get(scheduleId);
+        if (users != null) {
+            users.remove(userId);
+            if (users.isEmpty()) {
                 activeUsersMap.remove(scheduleId);
+                scheduleInputVersion.remove(scheduleId);
             }
         }
-        return usersPics;
+        return users;
     }
 
     @CrossOrigin
     @GetMapping("/users/{id}")
-    public Set<String> getUsers(@PathVariable Long id) {
-        Set<String> usersPics = activeUsersMap.get(id);
+    public Set<Long> getUsers(@PathVariable Long id) {
+        Set<Long> usersPics = activeUsersMap.get(id);
         if(usersPics.isEmpty()){
-            Set<String> empty = new HashSet<>();
-            empty.add("empty");
+            Set<Long> empty = new HashSet<>();
             return empty;
         }
 

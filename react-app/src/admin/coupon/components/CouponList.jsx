@@ -85,7 +85,10 @@ const CouponList = () => {
               >
                 <Flex align="center">
                   <Box
-                    p={6}
+                    pt={6}
+                    pb={6}
+                    pl={6}
+                    pr={2}
                     width="340px"
                     backgroundColor="white"
                     position="relative"
@@ -99,11 +102,12 @@ const CouponList = () => {
                       justify="space-between"
                       align="center"
                       mb={2}
+                      width="100%"
                     >
-                      <Text fontSize="18px" color="#2a6cb9">
+                      <Text fontSize="16px" color="#2a6cb9"flex="1" textAlign="left">
                         {coupon.description}
                       </Text>
-                      <Text fontSize="sm" color="gray.600">
+                      <Text fontSize="12px" color="gray.600" textAlign="right" whiteSpace="nowrap">
                         [ {coupon.airline_name} ]
                       </Text>
                     </Flex>

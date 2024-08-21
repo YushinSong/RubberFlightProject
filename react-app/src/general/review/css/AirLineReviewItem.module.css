@@ -1,25 +1,32 @@
 /* 리뷰 목록 페이지 */
+.listBox1 {
+    /* outline: 2px solid red; */
+     margin-left: -90px;
+}
+
 .listBox2 {
+    /* outline: 2px solid red; */
     transform: rotate(180deg) scaleY(-1) scaleX(1);
+    margin-right: -100px;
 }
 
 
 .reviewBox {
-    max-width: 500px;
-    min-width: 500px;
-    margin: 15px auto 20px 40px;
-    width: 90%;
-    height: 180px;
+    width: 550px;
+    margin: 20px auto 20px 40px;
+    /* width: 90%; */
+    height: 140px;
     border-width: 1px #edf9fffb;
     border-radius: 20px;
     padding: 16px;
-    background-color: #edf9ff;
+    /* background-color: #edf9ff; */
+    background-color: #edf5ff;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .reviewBox::after {
-    border-top: 30px solid #edf9ff;
+    border-top: 30px solid #edf5ff;
     border-left: 30px solid transparent;
     border-right: 0px solid transparent;
     border-bottom: 0px solid transparent;
@@ -36,16 +43,23 @@
 }
 
 .airlinename {
+    /* outline: 2px solid red; */
     font-family: 'GyeonggiTitleM';
     font-weight: 100;
     font-size: 23px;
     margin: -5px 0 0 5px;
+    max-width: 140px;
+    white-space: nowrap;    /* 텍스트를 한 줄로 유지 */
+    overflow: hidden;       /* 넘치는 텍스트 숨김 */
+    text-overflow: ellipsis; /* 넘치는 텍스트에 생략 기호 추가 */
 }
 
 .writeDate {
     text-align: right;
-    margin-right: 10px;
+    margin: -27px 10px 0 0;
+    /* margin-right: 10px; */
     color: #9e9e9e;
+
 }
 
 .profileCon {
@@ -79,13 +93,19 @@
 }
 
 .cardtitle {
-    margin-left: 30px;
+    margin-top: -10px;
+    margin-left: 10px;
     border-radius: 10px;
-    border: dotted #dde6f5;
-    padding-top: 13px;
-    padding-left: 10px;
-    height: 80%;
-    width: 85%;
+    /* border: dotted #dde6f5; */
+    border-top: dotted #dde6f5;
+    padding: 25px 0;
+    height: 60px;
+    width: 490px;
+    font-size: 22px;
+    text-align: center;
+    white-space: nowrap;    /* 텍스트를 한 줄로 유지 */
+    overflow: hidden;       /* 넘치는 텍스트 숨김 */
+    text-overflow: ellipsis; /* 넘치는 텍스트에 생략 기호 추가 */
 }
 
 /* 모달창(detail) */
@@ -98,10 +118,12 @@
 }
 
 .reviewtitle{
-    font-size: 40px;
-    margin: 30px 0 -15px 60px;
+    /* outline: 2px solid red; */
+    width: 650px;
+    font-size: 33px;
+    margin: 30px 0 -15px 50px;
     font-family: 'GyeonggiTitleM';
-    white-space: nowrap;    /* 텍스트를 한 줄로 유지 */
+    white-space: nowrap; 
 }
 
 .reviewRate {

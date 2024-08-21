@@ -80,11 +80,11 @@
 }
 
 .reviewBody {
+    /* outline: 2px solid red; */
     box-sizing: border-box;
     width: 80%;
     height: 100%;
-    padding: 35px;
-    padding-top: 40px;
+    padding: 40px 25px 35px 40px;
     /* background-color: #F1F5FC; */
     border-top: 1px solid #cacaca;
     float: left;
@@ -101,7 +101,8 @@
     height: 40px;
     width: 40px;
     margin-right: 10px;
-    background-color: #fcf4fa;
+    /* background-color: #fcf4fa; */
+    background-color: #fcf7e5;
     border-radius: 5px;
 }
 
@@ -120,7 +121,9 @@
 }
 
 .click {
-    background-color: #fcf4fa;
+    /* background-color: #edf5ff; */
+    background-color: #fcf7e5;
+    border-radius: 15px 0 0 15px;
 }
 
 #footerPart{

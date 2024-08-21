@@ -35,7 +35,7 @@ const FlightInfoDetail = () => {
         {/* 추가 비행 정보 표시 */}
         <FlightInfoItem flightInfo={flightInfo} timetable={timetable} history={history} />
 
-        {timetable.length > 0 && timetable[0]?.flight?.iataNumber && (
+        {timetable.length > 0 && timetable[0]?.flight?.iataNumber && new Date(flightInfo.arrSch) >= new Date() && new Date(flightInfo.depSch) < new Date() && (
           <Flex justifyContent="flex-end" mt={10} mr={30}>
             <Link 
               href={`/live?flight=${timetable[0].flight.iataNumber}`} 

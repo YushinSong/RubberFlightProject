@@ -24,6 +24,7 @@ const PasswordInput = ({ placeholder, name, value, onChange, onBlur }) => {
                 fontFamily='system-ui, sans-serif !important'
                 textAlign={'left'}
                 fontSize={'18px !important'}
+                className={styles.input}
             />
             <InputRightElement width='4.5rem'>
                 <Button h='1.75rem' size='sm' onClick={handleClick} bg={'#586D92'} color={'white'}>
@@ -164,15 +165,15 @@ const JoinForm = ({ join }) => {
                     minHeight: 100
                 }}
             >
-                <div className='homeBtn'
-                    style={{
-                        backgroundImage: 'url(/images/icons/commercial-plane.png)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center center',
-                        width: '75px',
-                        height: '75px',
-                        cursor: 'pointer'
-                    }}
+                <div className={styles.homeBtn}
+                    // style={{
+                    //     backgroundImage: 'url(../../../../../assets/images/main/logo.webp)',
+                    //     backgroundSize: 'cover',
+                    //     backgroundPosition: 'center center',
+                    //     width: '75px',
+                    //     height: '75px',
+                    //     cursor: 'pointer'
+                    // }}
                     onClick={home}
                 ></div>
             </div>

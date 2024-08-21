@@ -197,10 +197,10 @@ body{
 #reserveButton{
     font-family: "KIMM_Bold";
     font-size: 20px;
-    color: #636676;
+    color: #F2F4F7;
     z-index: 10;
     position: absolute;
-    background-color: #f8fbff;
+    background-color: #00235A;
     opacity: 0;
     border-radius: 100px;
     box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.082);
@@ -208,6 +208,9 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+#reserveButton:hover{
+    background-color: #00102b;
 }
 .showReserveClass{
     animation: showingReserve 1s linear;
@@ -239,6 +242,8 @@ body{
     background-color: #edf1f8d9;
     opacity: 0;
     /* outline: 2px solid red; */
+    width: 1150px !important;
+    height: 180px !important;
     /* overflow: hidden; */
 }
 .showSeachClass{
@@ -260,7 +265,7 @@ body{
         top: 28vh;
         opacity: 1;
         left: 50%;
-        transform: translateX(-60%);
+        transform: translateX(-50%);
     }
 }
 
@@ -268,7 +273,7 @@ body{
     font-family: "KIMM_Bold";
     color: #636676;
     width: 100%;
-    height: 38%;
+    height: 70px;
     position: relative;
     /* background-color: #495176; */
     border-bottom: #a9afcb 1px solid;
@@ -276,12 +281,15 @@ body{
     gap: 5px;
     align-items: center;
 }
+
 #roundway{
-    font-family: "KIMM_Bold";
     color: #636676;
-    margin-left: 3%;
-    width: 8%;
-    height: 70%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    margin-left: 40px;
+    margin-right: 10px;
+    width: 80px;
+    height: 45px;
     border-radius: 40px;
     display: flex;
     justify-content: center;
@@ -290,12 +298,10 @@ body{
     overflow: hidden;
     text-overflow: ellipsis;
 }
-#roundway:hover{
-    background-color: #c0cdf5;
-}
+
 #oneway{
-    width: 8%;
-    height: 70%;
+    width: 80px;
+    height: 45px;
     border-radius: 40px;
     display: flex;
     justify-content: center;
@@ -303,18 +309,22 @@ body{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
 }
-#oneway:hover{
-    background-color: #c0cdf5;
+
+#oneway:hover,
+#roundway:hover {
+    background-color: #cfe1ffb4;
 }
+
 .actives {
-    background-color: #255cb4;
+    background-color:  #4a7dc9d0;
     pointer-events: none;
     color: #ffffff !important;
 }
 
-#selectBox{
-    font-family: "KIMM_Bold";
+#selectBox{ 
     color: #1d212e;
     width: 100%;
     height: 62%;
@@ -325,46 +335,63 @@ body{
     align-items: center;
     justify-content: flex-start;
     padding-left: 1%;
-
 }
+
 #airportPart{
     /* background-color: aqua; */
-    width: 28%;
+    width: 38%;
     height: 80%;
     display: flex;
     gap: 5px;
     align-items: center;
     justify-content: center;
-    margin-left: -10px;
-    margin-right: -10px;
+    /* margin-left: -10px;
+    margin-right: -90px; */
 }
+
+#arrPart,
 #depPart {
     /* background-color: cadetblue; */
     width: 46%;
     height: 100%;
     display: flex;
     position: relative;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     flex-direction: column;
-    font-size: 26px;
-    margin-left: -20px;
-    color: #636676;
     outline: none !important;
 }
-#arrPart{
-    /* background-color: cadetblue; */
-    width: 46%;
-    height: 100%;
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    font-size: 26px;
-    margin-left: -20px;
-    color: #636676;
+
+#depPart {
+    margin-left: 20px;
 }
+
+/* #arrPart {
+    margin-left: 5px;
+} */
+
+.departureLabel,
+.departureDateLabel {
+    font-family: "KIMM_Light";
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #878787;
+}
+
+.departureDateLabel {
+    margin-left: 80px;
+}
+
+.depLabel {
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    padding-top: 10px;
+    color: black;
+}
+
 #editableDiv {
     position: relative;
     /* background-color: red; */
@@ -373,30 +400,46 @@ body{
 #airportName {
     position: relative;
     /* outline: 2px solid green; */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    color: black;
     z-index: 1;
+    font-size: 25px;
 }
+
+.placeholderText {
+    color: #616161 !important; 
+    font-size: 20px !important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+    width: 120% !important;
+    /* outline: 2px solid red; */
+  }
 
 .searchAirportContainer {
     /* outline: 2px solid red; */
     /* margin-top: 185px; */
-    width: 180%;
-    margin-left: 90px;
-    position: absolute; 
-    min-height: 300%;
-    top: 100%; 
+    width: 140%;
+    position: absolute;
+    padding: 10px;
+    min-height: 400px;
+    top: 105px;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    animation: slideUp 0.3s ease-in-out;
+    background-color: #ffffff !important; 
+    opacity: 0.7;
 }
 
 .searchContainer {
     /* outline: 2px solid blue; */
-    background-color: #e9eef8;
+    background-color: #FFFFFF;
+    /* outline: 2px solid red; */
     opacity: 1;
-    padding: 10px;
-    border-radius: 15px;
-    position: relative;
-    display: block; /* 또는 flex 등 */
-    visibility: visible; /* 숨겨져 있지 않은지 확인 */
-    opacity: 1; /* 투명도가 0이 아닌지 확인 */
-    z-index: 1; 
+    display: flex;
+    align-items: center;
+    border: 1px solid #b4c1e6d9; 
+    border-radius: 50px; 
+    padding: 10px 15px;
 }
 
 .searchAirport {
@@ -409,19 +452,15 @@ body{
     width: 100%;
     height: 100%;
     /* margin-top: 49px; */
-    font-size: 18px !important;
-    background-color: #ffffff !important;
-    outline: 2px solid #F7F7F9 !important;
+    font-size: 20px !important;
     display: flex;
-    border-radius: 10px !important;
+    text-align: left;
 }
   
 .searchAirport:focus {
     border: none;
     outline: none !important;
     width: 100%;
-    font-size: 18px !important;
-    outline: 1px solid #adb0b8d9 !important;
     /* outline: 2px solid salmon; */
 }
 
@@ -445,38 +484,40 @@ body{
     cursor: pointer;
 }
 
+
 /* 자동완성 */
 .autocompleteResults {
-    /* position: absolute; */
-    top: 100%;
+    position: absolute;
+    top: 100px;
     left: 0;
     width: 100%;
-    max-height: 150px;
+    max-height: 300px;
     overflow-y: auto;
-    background-color:   #E8EDF6;
+    background-color: white;
     opacity: 1;
-    border: 1px solid #d4d4d4;
     border-top: none;
     z-index: 999;
+    padding-left: 30px;
+    padding-right: 30px;
     border-radius: 4px;
-    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
-    margin-top: 10px;
 }
 
 .autocompleteResults div {
+    display: flex;
+    align-items: center;
     padding: 10px;
     cursor: pointer;
-    background-color:#a9b8cc;
-    color: #ffffff;
+    background-color: white;
     opacity: 1;
-    border-bottom: 1px solid #d4d4d4;
+    border-bottom: 1px solid #d8e1e6; 
+    color: black;
     font-size: 15px;
-    /* border-radius: 10px; */
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
 }
 
 .autocompleteResults div:hover {
-    background-color:#8696ac 
-}
+    background-color: #eaf2fd; 
+  }
 
 .autocompleteResults::-webkit-scrollbar {
     width: 5px; /* 스크롤바 너비 */
@@ -501,53 +542,54 @@ body{
 
 /* 날짜 */
 .datePart{
-    /* background-color: cadetblue; */
-    width: 36%;
-    margin-left: -26px;
+    width: 33%;
+    /* outline: 2px solid red; */
+    margin-left: -100px;
+    margin-right: 20px;
 }
 
 .datePickerContainer {
     display: flex;
-    gap: 16px;
-    justify-content: center;
-    align-items: center;
-    margin: 2.5px 1px;
-    outline: none !important;
+    justify-content: flex-start; 
     color: #6c6f74;
-    text-align: center;
-  }
+    width: 320px;
+    margin-left: 80px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+    font-weight: bold;
+    text-align: left !important;
+}
   
-  .flatInput{
+  .flatInput {
+    flex-grow: 1;
+    background-color: none;
     background: transparent !important;
-    color: #6c6f74;
-    font-size: 19px !important;
-    text-align: center;
-    padding: 0 !important;
-    /* outline: 2px solid salmon !important */
-  }
-
-  .flatInput:active{
-    background: transparent !important;
-    /* padding: 15px 0; */
-    margin-top: -2px;
-    color: #6c6f74;
-    font-size: 19px !important;
-    text-align: center;
-    /* outline: 2px solid salmon; */
+    outline: none;
+    color: #2b2b2b !important; 
+    font-size: 20px !important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+    font-weight: bold;
+    text-align: left !important;
   }
 
   .flatInput:focus {
+    outline: none;
     box-shadow: none;
     color: #6c6f74;
-    text-align: center;
-    font-size: 19px !important;
-    outline: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
   }
-  .flatInput::placeholder {
-    color: #6c6f74;
-    text-align: center;
-    font-size: 19px !important;
-    outline: none;
+
+.flatInput:hover {
+    color: #21A7E1 !important;
+}
+
+.flatInput:active {
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+}
+
+.flatInput::placeholder {
+    color: #6c6f74 !important;
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+    text-align: left !important;
 }
 
 /* 인원 */
@@ -560,9 +602,11 @@ body{
 
 .dropdownButton {
     width: 100%;
-    height: 100%;
     font-family: "KIMM_Bold";
-    color: #21A7E1;
+    font-size: 18px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+    font-weight: bold;
+    color: black;
     background: transparent;
     border: none;
     outline: none;
@@ -596,7 +640,7 @@ body{
 
 .cntContainerItem label {
     flex-grow: 1;
-    margin-left: 15px;
+    margin-left: 30px;
     margin-right: 4px;
     /* background-color: blue; */
 }
@@ -607,23 +651,24 @@ body{
     color: red;
     font-size: 18px;
     cursor: pointer;
+    margin: 0 10px;
 }
 
 .cntContainerItem span {
-    margin: 0 15px 0 4px;
+    margin: 0 30px 0 4px;
 }
 
   /* 제출 */
 #submitButton{
-    background-color: #255cb4;
+    background-color: #4875bd;
     width: 10%;
     height: 55%;
-    border-radius: 10px;
+    border-radius: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #ffffff;
-    margin-left: 13px;
+    margin-left: -10px;
     /* outline: 2px solid red; */
 }
 
@@ -638,7 +683,6 @@ body{
         opacity: 0; /* 끝날 때 다시 완전히 투명 */
     }
 }
-
 
 .errorMessage {
     /* outline: 2px solid red; */

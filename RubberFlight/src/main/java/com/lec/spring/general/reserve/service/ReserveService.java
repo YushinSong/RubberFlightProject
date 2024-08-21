@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +40,6 @@ public class ReserveService {
         this.airportRepository = airportRepository;
     }
 
-    // save
     public Reserve createReservation(String personnel, FlightInfo depFlightInfo, FlightInfo retFlightInfo) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -74,8 +75,8 @@ public class ReserveService {
     // 거리 측정
 
     private static final double EARTH_RADIUS = 6371.0; // 지구 반지름 (킬로미터)
-    private static final int MIN_PRICE_PER_KM = 180;
-    private static final int MAX_PRICE_PER_KM = 250;
+    private static final int MIN_PRICE_PER_KM = 72;
+    private static final int MAX_PRICE_PER_KM = 104;
 
     public double calculateDistance(String departureIata, String arrivalIata) {
         Airport departureAirport = airportRepository.findByAirportIso(departureIata);
@@ -119,10 +120,13 @@ public class ReserveService {
             for (Flight inbound : inboundFlights) {
                 Map<String, Object> combination = new HashMap<>();
                 int totalPrice = outbound.getPrice() + inbound.getPrice();
+                int totalDuration = outbound.getTakeTime() + inbound.getTakeTime();
                 combination.put("id", outbound.getId() + "_" + inbound.getId());
                 combination.put("outbound", outbound);
                 combination.put("inbound", inbound);
                 combination.put("totalPrice", totalPrice);
+                combination.put("totalDuration", totalDuration);
+
 
                 combinations.add(combination);
             }
@@ -130,7 +134,8 @@ public class ReserveService {
 
         // 가격에 따라 정렬
         return combinations.stream()
-                .sorted(Comparator.comparingInt(combination -> (int) combination.get("totalPrice")))
+                .sorted(Comparator.comparingInt((Map<String, Object> combination) -> (int) combination.get("totalPrice"))
+                        .thenComparingInt(combination -> (int) combination.get("totalDuration")))
                 .collect(Collectors.toList());
     }
 
@@ -146,8 +151,8 @@ public class ReserveService {
     // DB 저장
     @Transactional
     public Reserve saveReservation(Long userId, String personnel, boolean isRoundTrip, Flight outboundFlight, Flight inboundFlight, Coupon coupon) {
-        System.out.println("saveReservation Coupon" + coupon);
-        System.out.println("왕복인가요" + isRoundTrip);
+//        System.out.println("saveReservation Coupon" + coupon);
+//        System.out.println("왕복인가요" + isRoundTrip);
         Reserve reserve = new Reserve();
         User user = userRepository.findById(userId).orElse(null);
         reserve.setUser(user);
@@ -156,22 +161,32 @@ public class ReserveService {
 
         List<FlightInfo> flights = new ArrayList<>();
 
+        int adults = extractPersonnelCount(personnel, "성인");
+        int children = extractPersonnelCount(personnel, "소아");
+        int infants = extractPersonnelCount(personnel, "유아");
+
+        double childDiscount = 0.75;
+        double infantDiscount = 0.10;
+
         if(isRoundTrip) {
             if (outboundFlight != null) {
-                int discountedPrice = calculateDiscountedPrice(outboundFlight.getPrice(), coupon);
+                int outboundPrice = (int) Math.floor(calculateTotalPrice(adults, children, infants, outboundFlight.getPrice(), childDiscount, infantDiscount));
+                int discountedPrice = calculateDiscountedPrice(outboundPrice , coupon);
                 System.out.println("outboundFlight discountedPrice" + discountedPrice);
                 FlightInfo outbound = createFlightInfo(reserve, outboundFlight, discountedPrice);
                 flights.add(outbound);
             }
             if (inboundFlight != null) {
-                int discountedPrice = calculateDiscountedPrice(inboundFlight.getPrice(), coupon);
+                int inboundPrice = (int) Math.floor(calculateTotalPrice(adults, children, infants, inboundFlight.getPrice(), childDiscount, infantDiscount));
+                int discountedPrice = calculateDiscountedPrice(inboundPrice, coupon);
                 System.out.println("inboundFlight discountedPrice" + discountedPrice);
                 FlightInfo inbound = createFlightInfo(reserve, inboundFlight, discountedPrice);
                 flights.add(inbound);
             }
 
         } else {
-            int discountedPrice = calculateDiscountedPrice(outboundFlight.getPrice(), coupon);
+            int outboundPrice = (int) Math.floor(calculateTotalPrice(adults, children, infants, outboundFlight.getPrice(), childDiscount, infantDiscount));
+            int discountedPrice = calculateDiscountedPrice(outboundPrice, coupon);
             FlightInfo outbound = createFlightInfo(reserve, outboundFlight, discountedPrice);
             flights.add(outbound);
         }
@@ -180,11 +195,31 @@ public class ReserveService {
         return reserve;
     }
 
+    // 정규식으로 인원 추출
+    private int extractPersonnelCount(String personnelString, String type) {
+        Pattern pattern = Pattern.compile(type + " (\\d+)명");
+        Matcher matcher = pattern.matcher(personnelString);
+
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group(1));
+        } else {
+            return 0;
+        }
+    }
+
+    // 총 가격을 계산
+    private double calculateTotalPrice(int adults, int children, int infants, double adultPrice, double childDiscount, double infantDiscount) {
+        double childPrice = adultPrice * childDiscount;
+        double infantPrice = adultPrice * infantDiscount;
+        return (adults * adultPrice) + (children * childPrice) + (infants * infantPrice);
+    }
+
+
     private int calculateDiscountedPrice(int price, Coupon coupon) {
 //        System.out.println("calculateDiscoutendRrice price" + price);
 //        System.out.println("calculateDiscoutendRrice coupon percent" + coupon.getPercent());
-        if(coupon == null) {return price;}
-        return (int) (price * (1 - coupon.getPercent() /  100.0));
+        if(coupon == null) {return (price / 10 * 10);}
+        return (int) (price * (1 - coupon.getPercent() /  100.0) / 10) * 10;
     }
 
     private FlightInfo createFlightInfo(Reserve reserve, Flight flight, int discountedPrice) {
@@ -241,5 +276,9 @@ public class ReserveService {
                 }
             }
         }
+    }
+
+    public int getReservationCntByUserId(Long userId) {
+        return reserveRepository.countByUserId(userId);
     }
 }

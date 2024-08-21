@@ -18,7 +18,7 @@ public class AirportService {
     // 공항 목록
     @Transactional
     public List<Airport> list() {
-        return airportRepository.findAll(Sort.by(Sort.Order.desc("id")));
+        return airportRepository.findAll(Sort.by(Sort.Order.asc("airportIso")));
     }
 
     // 나라별 공항 목록

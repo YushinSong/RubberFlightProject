@@ -3,7 +3,7 @@ export const validateCouponCode = (code, existingUserCoupons, existingAdminCoupo
      return '쿠폰 코드를 입력해주세요.';
    }
  
-   if (code.length < 6) {
+   if (code.length < 5) {
      return '쿠폰 코드 길이가 너무 짧습니다.';
    }
  
