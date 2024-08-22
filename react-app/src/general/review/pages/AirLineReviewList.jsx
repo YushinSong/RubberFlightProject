@@ -91,24 +91,28 @@ const AirLineReviewList = () => {
   // 페이지 버튼을 생성하는 함수
   const pageButtons = (totalPages) => {
     const buttons = [];
-    const totalGroups = Math.ceil(totalPages / 5); // 5개씩 그룹
+    const groupSize = 5; // 한 그룹에 보여줄 페이지 수
+    const currentGroup = Math.floor(currentPage / groupSize); // 현재 페이지가 속한 그룹 계산
+    const startPage = currentGroup * groupSize; // 현재 그룹의 시작 페이지 계산
+    // const totalGroups = Math.ceil(totalPages / 5); // 5개씩 그룹
+    // Array.from({ length: totalGroups }).forEach((_, btnIndex) => {
+    //   const startPage = btnIndex * 5; // 시작 페이지 번호
+    //   const pageGroup = [];
 
-    Array.from({ length: totalGroups }).forEach((_, btnIndex) => {
-      const startPage = btnIndex * 5; // 시작 페이지 번호
-      const pageGroup = [];
-
-      Array.from({ length: Math.min(5, totalPages - startPage) }).forEach(
-        (_, index) => {
-          const pageNumber = startPage + index; // 페이지 번호 계산
-          pageGroup.push(
-            <button className={styles.reviewPageBtn} key={pageNumber}
-              onClick={() => handlePageChange(pageNumber)} disabled={pageNumber >= totalPages}>{/*유효한 페이지 번호인지 확인 */}
-              {pageNumber + 1}
-            </button>
-          );
-        });
-      buttons.push(<span key={btnIndex} className={styles.reviewPageGroup}>{pageGroup}</span>);
-    });
+    // 현재 그룹의 페이지 버튼 생성
+    for (let i = 0; i < groupSize && startPage + i < totalPages; i++) {
+      const pageNumber = startPage + i;
+      buttons.push(
+        <button
+          className={`${styles.reviewPageBtn} ${currentPage === pageNumber ? styles.pageClick: ''}`}
+          key={pageNumber}
+          onClick={() => handlePageChange(pageNumber)}
+          disabled={pageNumber >= totalPages} // 유효한 페이지 번호인지 확인
+        >
+          {pageNumber + 1} {/* 실제로 표시할 때는 1을 더해줌 */}
+        </button>
+      );
+    }
     return buttons;
   };
 

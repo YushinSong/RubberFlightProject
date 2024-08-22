@@ -15,6 +15,8 @@ public interface FlightInfoRepository extends JpaRepository<FlightInfo, Long> {
 
     FlightInfo findByIdAndReserveUserId(Long id, Long userId);
 
+    List<FlightInfo> findByReserveUserIdOrderByReserveReserveDateDesc(Long userId);
+
     FlightInfo findByReviewId(Long reviewId);
 
     List<FlightInfo> findByReserve(Reserve reserve);

@@ -69,8 +69,8 @@ public class NoteController {
         }
         if(dates.getEditVersion() != -1)
             scheduleInputVersion.put(dates.getScheduleId(), dates.getEditVersion());
-        else
-            System.out.println("-1이 버전으로 들어옴");
+//        else
+//            System.out.println("-1이 버전으로 들어옴");
         scheduleService.updateEditDate(dates.getScheduleId());
         List<Date> allList = dateService.findAllBySchedule(dates.getScheduleId());
         Pair<List<Date>, Long> result = Pair.of(allList, scheduleInputVersion.get(dates.getScheduleId()));
@@ -104,7 +104,7 @@ public class NoteController {
 
         Set<Long> users = activeUsersMap.get(scheduleId);
 
-        System.out.println("접속한 유저들" + users);
+//        System.out.println("접속한 유저들" + users);
 
         return users;
     }
@@ -129,7 +129,7 @@ public class NoteController {
     }
 
     @CrossOrigin
-    @GetMapping("/users/{id}")
+    @GetMapping("/scheduleusers/{id}")
     public Set<Long> getUsers(@PathVariable Long id) {
         Set<Long> usersPics = activeUsersMap.get(id);
         if(usersPics.isEmpty()){
@@ -139,4 +139,5 @@ public class NoteController {
 
         return usersPics;
     }
+
 }

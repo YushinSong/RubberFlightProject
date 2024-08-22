@@ -85,14 +85,20 @@ const ScheduleEdit = () => {
         fetch(`${backUrl}/title/${id}`)
             .then(response => response.json())
             .then(data => setTitle(data.title));
-
         webSocketService.connect((newContent) => {
             if (newContent.title && isMounted) {
                 setTitle(newContent.title);
             } 
         }, id).then(() => {
             if(!isMounted){
-                webSocketService.joinPage(id, token);
+                webSocketService.joinPage(id, token).then(() => {
+                    fetch(`${backUrl}/scheduleusers/${id}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(`현재 접속 유저 ${data}`);
+                            setActiveUsers(data)
+                        });
+                });
                 webSocketService.subscribeTo(id, setTitle, "title");
                 webSocketService.subscribeTo(id, setActiveUsers, "users");
                 isMounted = true;
@@ -215,7 +221,7 @@ const ScheduleEdit = () => {
                     </div>
                 </div>
             </div>
-            <ScheduleEditPart ScheduleId={id} activeUsersPic={activeUsersPic}/>
+            <ScheduleEditPart ScheduleId={id} activeUsersPic={activeUsersPic} />
         </div>
     );
 };

@@ -73,10 +73,8 @@ public class ReviewService {
             airline = new Airline();
             airline.setName(flight.getAirlineName());
             airlineRepository.save(airline);  // 새로운 항공사 저장
-            System.out.println("항공사 이름 추가 :" + flight.getAirlineName());
         } else {
             // 항공사 존재하면 해당 항공사 가져오기
-            System.out.println(flight.getAirlineName() + "는 이미 있는 항공사");
             airline = airlineRepository.findByName(flight.getAirlineName());
         }
 

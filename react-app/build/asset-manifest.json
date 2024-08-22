@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.5b838f3a.css",
-    "main.js": "/static/js/main.b4140f62.js",
+    "main.css": "/static/css/main.2a0d0a2f.css",
+    "main.js": "/static/js/main.9d39fafd.js",
     "static/js/206.7544542d.chunk.js": "/static/js/206.7544542d.chunk.js",
     "static/media/cloud.webp": "/static/media/cloud.71f4ed1aea07a7b84bca.webp",
     "static/media/cloud2.webp": "/static/media/cloud2.2d47371553796b4fbf96.webp",
@@ -19,6 +19,7 @@
     "static/media/stamp.webp": "/static/media/stamp.1c6fc6a7fd448d600fff.webp",
     "static/media/facebook_login_btn.webp": "/static/media/facebook_login_btn.23ea7e42cdb539e03717.webp",
     "static/media/img2.webp": "/static/media/img2.7f30065a0fc11f0fa238.webp",
+    "static/media/cartooncloud.webp": "/static/media/cartooncloud.8c63480d4aa8c261f199.webp",
     "static/media/top1.webp": "/static/media/top1.a377f4b4cd86a681157f.webp",
     "static/media/google_login_btn.webp": "/static/media/google_login_btn.59e4d25f4d168f721dc3.webp",
     "static/media/bot.webp": "/static/media/bot.737720e36f3352f68ce1.webp",
@@ -44,7 +45,7 @@
     "static/media/next.webp": "/static/media/next.08b827d4e70a31b57493.webp"
   },
   "entrypoints": [
-    "static/css/main.5b838f3a.css",
-    "static/js/main.b4140f62.js"
+    "static/css/main.2a0d0a2f.css",
+    "static/js/main.9d39fafd.js"
   ]
 }

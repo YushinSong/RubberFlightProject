@@ -6,12 +6,13 @@ export const FlightInfoContext = createContext();
 export const FlightInfoProvider = ({ children }) => {
   const [flightInfo, setFlightInfo] = useState(null);
   const [history, setHistory] = useState([]);
+  // const [historyDep, setHistoryDep] = useState([]);
+  // const [historyArr, setHistoryArr] = useState([]);
   const [timetable, setTimetable] = useState([]);
   const [flightId, setFlightId] = useState(null);
 
   const fetchFlightData = async () => {
     if (flightId) {
-      const startTime = performance.now();
 
       try {
         const response = await getFlightInfo(flightId);
@@ -21,9 +22,10 @@ export const FlightInfoProvider = ({ children }) => {
         setHistory(fetchedData.history || []);
         setTimetable(fetchedData.timetable || []);
 
-        const endTime = performance.now();
-        const duration = endTime - startTime; 
-        console.log(`API 호출 소요 시간: ${duration.toFixed(2)}ms`); 
+        console.log("예약 데이터:", fetchedData.flightInfo);
+        console.log("지난 예약 데이터:", fetchedData.history);
+        console.log("예정된 예약 데이터:", fetchedData.timetable);
+
       } catch (error) {
         console.error("Error fetching flight data:", error);
       }

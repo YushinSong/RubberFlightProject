@@ -47,9 +47,9 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         Cookie jwtCookie = new Cookie("accessToken", token);
         jwtCookie.setHttpOnly(false); // Allow JavaScript access
-        jwtCookie.setSecure(false); // Use only over HTTPS
-        jwtCookie.setPath("/"); // Available for all paths
-        jwtCookie.setMaxAge(60 * 60 * 600); // Set expiration time
+        jwtCookie.setSecure(false);
+        jwtCookie.setPath("/");
+        jwtCookie.setMaxAge(60 * 60 * 600);
 
         response.addCookie(jwtCookie);
 

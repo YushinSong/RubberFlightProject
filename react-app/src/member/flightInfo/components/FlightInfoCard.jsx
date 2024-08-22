@@ -13,6 +13,14 @@ const FlightInfoCard = ({ flight, index, tabKey, isPast, review }) => {
   const status = getStatusText(flight);
   const [isHovered, setIsHovered] = useState(false); 
 
+  const formatTime = (dateString) => {
+    if (!dateString) return "-";
+    const date = new Date(dateString);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
   return (
     <MotionBox
       key={flight.id + tabKey}
@@ -62,7 +70,7 @@ const FlightInfoCard = ({ flight, index, tabKey, isPast, review }) => {
             <Text style={{ fontSize: '13px', marginTop: '12px', color: '#6fa8dc', fontWeight: 'bold' }}>{flight.depAirport}</Text>
             <Text fontSize="sm" mt={3}>출발</Text>
             <Text fontSize="md" fontWeight="bold" mt={3} mb={2}>
-              {new Date(flight.depSch).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
+              {formatTime(flight.depSch) || "-"}
             </Text>
           </Box>
 
@@ -81,7 +89,7 @@ const FlightInfoCard = ({ flight, index, tabKey, isPast, review }) => {
             <Text style={{ fontSize: '13px', marginTop: '12px', color: '#6fa8dc', fontWeight: 'bold' }}>{flight.arrAirport}</Text>
             <Text fontSize="sm" mt={3}>도착</Text>
             <Text fontSize="md" fontWeight="bold" mt={3} mb={2}>
-              {new Date(flight.arrSch).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
+              {formatTime(flight.arrSch) || "-"}
             </Text>
           </Box>
         </Flex>

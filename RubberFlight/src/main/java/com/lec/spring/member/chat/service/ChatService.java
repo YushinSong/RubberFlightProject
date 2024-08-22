@@ -162,8 +162,7 @@ public class ChatService {
     }
 
     public String formatAiResponse(String response) {
-        // 항목을 번호 매기기와 줄바꿈으로 포맷
-        String[] items = response.split("\n"); // 항목이 줄바꿈으로 구분된다고 가정
+        String[] items = response.split("\n"); // 항목이 줄바꿈으로 구분
         StringBuilder formattedResponse = new StringBuilder();
 
         for (String item : items) {

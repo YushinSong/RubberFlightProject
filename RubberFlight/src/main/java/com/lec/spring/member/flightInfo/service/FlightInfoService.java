@@ -26,7 +26,7 @@ public class FlightInfoService {
 
     @Transactional
     public List<FlightInfo> findByUserId(Long userId) {
-        return flightInfoRepository.findByReserveUserId(userId);
+        return flightInfoRepository.findByReserveUserIdOrderByReserveReserveDateDesc(userId);
     }
 
     @Transactional

@@ -94,7 +94,7 @@ const ScheduleEditPart = (props) => {
                     <div id={style.addButton} onClick={handleAddDate}/>
                 </div>
                 <div id={style.chatcontainer}>
-                    <Chat activeUsersPic={props.activeUsersPic} />
+                    <Chat />
                 </div>
             </div>
             <div id={style.datelistcontainer}>

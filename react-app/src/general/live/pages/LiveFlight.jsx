@@ -95,7 +95,7 @@ const LiveFlight = () => {
           console.error('iframe or contentWindow is not available.');
         }
       } else {
-        alert("조회실패", "현재 비행 정보가 없는 코드입니다.", "error" )
+        alert("조회실패", "현재 비행 정보가 없는 코드입니다.", "error" );
       }
     } catch (error) {
       console.error("Error fetching flight or airport data:", error);

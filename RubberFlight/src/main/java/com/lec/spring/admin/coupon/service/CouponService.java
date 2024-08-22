@@ -61,7 +61,7 @@ public class CouponService {
     public List<Coupon> getCouponsByUserId(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
         List<Coupon> coupons = user.getCoupons();
-        System.out.println("Return coupons for userId " + userId + ": " + coupons);
+//        System.out.println("Return coupons for userId " + userId + ": " + coupons);
         return coupons;
     }
 

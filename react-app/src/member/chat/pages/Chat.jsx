@@ -11,14 +11,31 @@ import Spin from '../../../assets/images/schedule/spin.webp';
 import Help from '../../../assets/images/schedule/help.webp';
 
 
-const Chat = (props) => {
+const Chat = () => {
   const {userInfo} = useUser();
   const [loading, setLoading] = useState(false);
   const initialMessages = [{ sender: 'Lumi', text: `안녕하세요!<br/> 어떤 여행지를 추천해드릴까요?` }];
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState(initialMessages);
+  const [userProfileImg, setUserProfileImg] = useState('');
   const backUrl = process.env.REACT_APP_BACK_URL;
   const textAreaRef = useRef(null);
+  const token = Cookies.get('accessToken');
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: `${backUrl}/chatImg`,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    }
+    })
+    .then((response) => {
+      const {data} = response;
+      setUserProfileImg(data);
+    })
+  }, []); 
 
   // 메시지 배열이 변경될 때마다 스크롤을 조정
   useEffect(() => {
@@ -27,6 +44,8 @@ const Chat = (props) => {
       textAreaRef.current.focus();
     }
   }, [chatHistory]); 
+
+
 
   const handleSendMessage = async () => {
     if (message.trim() === '') {
@@ -106,7 +125,7 @@ const Chat = (props) => {
                   { chat.sender !== 'Lumi' ? 
                     (<div>
                       <Flex justifyContent='end'>
-                        <Image borderRadius='full' boxSize='40px' objectFit='cover' src={props.activeUsersPic} border='2px solid #ffa9e8' />
+                        <Image borderRadius='full' boxSize='40px' objectFit='cover' src={userProfileImg} border='2px solid #ffa9e8' />
                       </Flex>
                       <Flex justifyContent='end'>
                         <div dangerouslySetInnerHTML={{ __html: chat.text }} className={styles.contentUser}/>

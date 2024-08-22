@@ -96,7 +96,7 @@ public class ChecklistController {
     @GetMapping("/items/{checklistId}")
     public ResponseEntity<List<ChecklistItemDTO>> getChecklistItemsByChecklistId(@PathVariable Long checklistId) {
         List<ChecklistItemDTO> items = checklistService.getChecklistItemsByChecklistId(checklistId);
-        System.out.println("체크리스트 ID: " + checklistId + "에 대한 아이템: " + items); // 로그 추가
+//        System.out.println("체크리스트 ID: " + checklistId + "에 대한 아이템: " + items);
         if (items.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
